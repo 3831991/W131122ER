@@ -35,11 +35,48 @@ const avg = () => {
 }
 
 const colors = () => {
-    for (let i = 0; i < 30; i++) {
+    const elem = document.querySelector("#output7");
+    elem.innerHTML = "";
+
+    for (let i = 0; i < 100; i++) {
         const div = document.createElement("div");
         div.style.height = "20px";
         div.style.width = "20px";
+        div.style.display = "inline-block";
         div.style.backgroundColor = `hsl(${i * 5} 100% 44%)`;
 
+        elem.appendChild(div);
     }
+}
+
+const showSpecialAsterisks = () => {
+    const elem = document.querySelector("#output8");
+    elem.innerHTML = "";
+
+    // for (let i = 1; i <= 10; i++) {
+    //     for (let x = 0; x < i; x++) {
+    //         elem.innerHTML += "*";
+    //     }
+
+    //     elem.innerHTML += "<br>";
+    // }
+
+    for (let i = 1; i <= 10; i++) {
+        elem.innerHTML += new Array(i).fill("*").join("");
+        elem.innerHTML += "<br>";
+    }
+}
+
+const showSpecialAsterisks10 = () => {
+    const elem = document.querySelector("#output9");
+    elem.innerHTML = "";
+
+    for (let i = 1; i <= 10; i++) {
+        elem.innerHTML += new Array(10).fill("*").join("");
+        elem.innerHTML += "<br>";
+    }
+}
+
+const multiBoard = () => {
+    
 }
