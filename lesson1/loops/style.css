@@ -92,3 +92,11 @@ p {
     display: flex;
     justify-content: center;
 }
+
+#board div:nth-child(10n + 1) {
+    background-color: yellow;
+}
+
+#board div:nth-child(-n + 10) {
+    background-color: yellow;
+}
