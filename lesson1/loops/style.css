@@ -79,11 +79,16 @@ p {
 
 #board {
     direction: ltr;
-    border-collapse: collapse;
+    display: grid;
+    grid-template-columns: repeat(10, 40px);
+    justify-content: center;
 }
 
-td {
-    padding: 8px;
-    border: 1px solid black;
+#board div {
     text-align: center;
+    border: 1px solid;
+    height: 40px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
 }
