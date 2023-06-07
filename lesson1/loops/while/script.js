@@ -34,3 +34,31 @@ const showNumbers = () => {
         elem.innerHTML += `${i++}<br>`;
     }
 }
+
+const showRange = () => {
+    let i = 10;
+    const arr = [];
+
+    while (i <= 30) {
+        arr.push(i++);
+    }
+
+    document.querySelector("#output4").innerHTML = arr.join();
+}
+
+const showSizeNumber = () => {
+    let i = 1;
+    const elem = document.querySelector("#output5");
+    elem.innerHTML = "";
+
+    while (i <= 100) {
+        const span = document.createElement('span');
+        span.innerHTML = i + ', ';
+        span.style.fontSize = `${i}px`;
+        span.style.color = `hsl(${i * 20} 100% 44%)`;
+
+        elem.appendChild(span);
+
+        i++;
+    }
+}
