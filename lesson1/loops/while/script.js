@@ -53,9 +53,9 @@ const showSizeNumber = () => {
 
     while (i <= 100) {
         const span = document.createElement('span');
-        span.innerHTML = i + ', ';
+        span.innerHTML = i + (i < 100 ? ', ' : '.');
         span.style.fontSize = `${i}px`;
-        span.style.color = `hsl(${i * 20} 100% 44%)`;
+        span.style.color = `hsl(${i * 5} 100% 44%)`;
 
         elem.appendChild(span);
 
