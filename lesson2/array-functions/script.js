@@ -13,4 +13,24 @@ document.querySelector("#numbers div").innerHTML = numbers.join(", ");
 // },
 
 // תרגיל 1
-document.querySelector("#task1 p").innerHTML = students.map(s => `${s.firstName} ${s.lastName}`).join(", ");
+document.querySelector("#task1 p").innerHTML = 
+students.slice(20, 40).map(s => `${s.firstName} ${s.lastName}`).join(", ") + ".";
+
+// תרגיל 2
+document.querySelector("#task2 p").innerHTML = 
+students.slice(40, 60).map((s, i) => `(${i + 1}) ${s.firstName} ${s.lastName}`).join(". ") + ".";
+
+// תרגיל 3
+document.querySelector("#task3 p").innerHTML =
+numbers.map(n => n * 2).join(" | ");
+
+// תרגיל 4
+document.querySelector("#task4 p").innerHTML =
+numbers.filter(n => n > 40).join(" | ");
+
+// תרגיל 5
+document.querySelector("#task5 p").innerHTML =
+numbers.filter(n => n >= 20 && n <= 50).join(" | ");
+
+// תרגיל 6
+const word = document.querySelector("#task6 input").value;
