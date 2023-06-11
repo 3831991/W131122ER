@@ -33,4 +33,11 @@ document.querySelector("#task5 p").innerHTML =
 numbers.filter(n => n >= 20 && n <= 50).join(" | ");
 
 // תרגיל 6
-const word = document.querySelector("#task6 input").value;
+document.querySelector("#task6 input").addEventListener("input", ev => {
+    const word = ev.target.value;
+
+    document.querySelector("#task6 p").innerHTML =
+    students.filter(s => `${s.firstName} ${s.lastName}`.includes(word))
+            .map(s => `${s.firstName} ${s.lastName}`.split(word).join(`<mark>${word}</mark>`))
+            .join("<br>");
+});
