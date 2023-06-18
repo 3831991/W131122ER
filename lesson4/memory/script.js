@@ -1,4 +1,4 @@
-const amount = 15;
+const amount = 3;
 const numbers = [];
 const board = document.querySelector(".board");
 board.style.gridTemplateColumns = `repeat(6, 1fr)`;
@@ -19,6 +19,10 @@ for (let i = 1; i <= amount * 2; i++) {
     numbers.splice(rand, 1);
 
     div.addEventListener("click", ev => {
+        if (ev.target.classList.contains('hidden')) {
+            return;
+        }
+
         if (board.querySelectorAll(".showing").length == 2) {
             return;
         }
@@ -36,7 +40,13 @@ function check() {
         const last = cards[1];
 
         if (first.innerText == last.innerText) {
-            // התאמה
+            setTimeout(() => {
+                first.classList.remove("showing");
+                last.classList.remove("showing");
+                
+                first.classList.add("hidden");
+                last.classList.add("hidden");
+            }, 1000);
         } else {
             setTimeout(() => {
                 first.classList.remove("showing");

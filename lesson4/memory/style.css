@@ -78,6 +78,11 @@ button:hover {
     transform: matrix3d(1, 0, 4, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1);
 }
 
+.board div.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
 .board div.showing span {
     display: initial;
 }
