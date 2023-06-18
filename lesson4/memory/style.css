@@ -122,3 +122,7 @@ p {
 p .margin {
     margin: 0 12px;
 }
+
+.cheat {
+    filter: brightness(0.7);
+}

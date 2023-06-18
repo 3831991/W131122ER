@@ -1,5 +1,6 @@
-const amount = 10;
+const amount = 12;
 const numbers = [];
+let attamps = 0;
 const board = document.querySelector(".board");
 board.style.gridTemplateColumns = `repeat(6, 1fr)`;
 
@@ -28,6 +29,17 @@ for (let i = 1; i <= amount * 2; i++) {
         }
 
         ev.target.classList.add("showing");
+
+        board.querySelectorAll(".cheat").forEach(elem => elem.classList.remove('cheat'));
+        const elements = board.querySelectorAll("div:not(.showing)");
+
+        for (const elem of elements) {
+            if (elem.textContent == ev.target.textContent) {
+                elem.classList.add("cheat");
+                break;
+            }
+        }
+
         check();
     });
 }
@@ -38,8 +50,9 @@ function check() {
     if (cards.length == 2) {
         const first = cards[0];
         const last = cards[1];
+        document.querySelector(".counter").innerHTML = ++attamps;
 
-        if (first.innerText == last.innerText) {
+        if (first.textContent == last.textContent) {
             setTimeout(() => {
                 first.classList.remove("showing");
                 last.classList.remove("showing");
