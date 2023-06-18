@@ -1,4 +1,4 @@
-const amount = 3;
+const amount = 10;
 const numbers = [];
 const board = document.querySelector(".board");
 board.style.gridTemplateColumns = `repeat(6, 1fr)`;

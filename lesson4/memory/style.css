@@ -113,3 +113,12 @@ button:hover {
     justify-content: center;
     animation: zoom-in 2s;
 }
+
+p {
+    text-align: center;
+    color: white;
+}
+
+p .margin {
+    margin: 0 12px;
+}
