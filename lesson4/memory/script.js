@@ -19,6 +19,29 @@ for (let i = 1; i <= amount * 2; i++) {
     numbers.splice(rand, 1);
 
     div.addEventListener("click", ev => {
+        if (board.querySelectorAll(".showing").length == 2) {
+            return;
+        }
+
         ev.target.classList.add("showing");
+        check();
     });
+}
+
+function check() {
+    const cards = board.querySelectorAll(".showing");
+
+    if (cards.length == 2) {
+        const first = cards[0];
+        const last = cards[1];
+
+        if (first.innerText == last.innerText) {
+            // התאמה
+        } else {
+            setTimeout(() => {
+                first.classList.remove("showing");
+                last.classList.remove("showing");
+            }, 1500);
+        }
+    }
 }
