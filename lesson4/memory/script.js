@@ -46,6 +46,8 @@ function check() {
                 
                 first.classList.add("hidden");
                 last.classList.add("hidden");
+
+                checkIsComplete();
             }, 1000);
         } else {
             setTimeout(() => {
@@ -53,5 +55,18 @@ function check() {
                 last.classList.remove("showing");
             }, 1500);
         }
+    }
+}
+
+function checkIsComplete() {
+    const cards = board.querySelectorAll("div:not(.hidden)");
+
+    if (!cards.length) {
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            decay: 0.9,
+            origin: { y: 0.6 }
+        });
     }
 }
