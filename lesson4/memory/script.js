@@ -1,6 +1,18 @@
 const amount = 12;
 const numbers = [];
 let attamps = 0;
+let timer = 0;
+
+let timerInterval = setInterval(() => {
+    timer++;
+
+    const date = new Date(timer * 1000);
+    const m = date.getMinutes();
+    const s = date.getSeconds();
+
+    document.querySelector('.timer').innerHTML = `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
+}, 1000);
+
 const board = document.querySelector(".board");
 board.style.gridTemplateColumns = `repeat(6, 1fr)`;
 
@@ -75,6 +87,8 @@ function checkIsComplete() {
     const cards = board.querySelectorAll("div:not(.hidden)");
 
     if (!cards.length) {
+        clearInterval(timerInterval);
+
         confetti({
             particleCount: 100,
             spread: 70,
