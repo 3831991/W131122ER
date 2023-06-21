@@ -1,11 +1,13 @@
-const height = 30
-const width = 30;
+const height = 40;
+const width = 50;
 
-const snake = [6, 5, 4, 3, 2, 1, 0];
+const snake = [5, 4, 3, 2, 1, 0];
 let head = snake[0];
 
+let isGameOver = false;
 let direction = 'left';
 let interval;
+let random;
 
 const rightBoundaries = [];
 const leftBoundaries = [];
@@ -27,10 +29,10 @@ function createBoard() {
     for (let i = 0; i < width * height; i++) {
         const div = document.createElement("div");
         board.appendChild(div);
-        div.innerHTML = i;
     }
 
     color();
+    setRandom();
 }
 
 function color() {
@@ -56,6 +58,10 @@ window.addEventListener("keydown", ev => {
 });
 
 function move(dir) {
+    if (isGameOver) {
+        return;
+    }
+
     const divs = board.querySelectorAll("div");
 
     if (dir == 'up') {
@@ -66,7 +72,7 @@ function move(dir) {
         head -= width;
 
         if (!divs[head]) {
-            alert("Game over");
+            gameOver();
             return;
         }
     } else if (dir == 'right') {
@@ -77,7 +83,7 @@ function move(dir) {
         head--;
 
         if (rightBoundaries.includes(head)) {
-            alert("Game over");
+            gameOver();
             return;
         }
     } else if (dir == 'down') {
@@ -88,7 +94,7 @@ function move(dir) {
         head += width;
 
         if (!divs[head]) {
-            alert("Game over");
+            gameOver();
             return;
         }
     } else if (dir == 'left') {
@@ -99,9 +105,14 @@ function move(dir) {
         head++;
 
         if (leftBoundaries.includes(head)) {
-            alert("Game over");
+            gameOver();
             return;
         }
+    }
+
+    if (snake.includes(head)) {
+        gameOver();
+        return;
     }
 
     direction = dir;
@@ -115,4 +126,23 @@ function move(dir) {
 function startAuto() {
     clearInterval(interval);
     interval = setInterval(() => move(direction), 200);
+}
+
+function setRandom() {
+    random = Math.floor(Math.random() * (width * height));
+
+    if (snake.includes(random)) {
+        setRandom();
+    } else {
+        const divs = board.querySelectorAll("div");
+
+        divs.forEach(el => el.classList.remove('blueberry'));
+        divs[random].classList.add('blueberry');
+    }
+}
+
+function gameOver() {
+    isGameOver = true;
+    alert("Game over");
+    location.reload();
 }

@@ -40,21 +40,12 @@ h1 {
 }
 
 .board div {
-    width: 20px;
-    height: 20px;
-    font-size: 9px;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 10px;
+    height: 10px;
 }
 
 .snake {
     background-color: #5c00ff;
-}
-
-.head {
-    background-color: #4c00d0;
 }
 
 .head.up {
@@ -72,4 +63,12 @@ h1 {
 
 .head.left {
     border-radius: 6px 0 0 6px;
+}
+
+.blueberry::after {
+    content: "🫐";
+    position: relative;
+    top: -5px;
+    right: -3px;
+    font-size: 13px;
 }
