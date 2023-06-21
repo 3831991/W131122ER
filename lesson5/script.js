@@ -7,6 +7,19 @@ let head = snake[0];
 let direction = 'left';
 let interval;
 
+const rightBoundaries = [];
+const leftBoundaries = [];
+
+// גבולות ימין
+for (let i = 0; i < height; i++) {
+    rightBoundaries.push(i * width - 1);
+}
+
+// גבולות שמאל
+for (let i = 0; i < height; i++) {
+    leftBoundaries.push(i * width);
+}
+
 const board = document.querySelector('.board');
 board.style.gridTemplateColumns = `repeat(${width}, 1fr)`;
 
@@ -23,11 +36,11 @@ function createBoard() {
 function color() {
     const divs = board.querySelectorAll("div");
 
-    divs.forEach(el => el.classList.remove('snake', 'head'));
+    divs.forEach(el => el.classList.remove('snake', 'head', 'up', 'right', 'down', 'left'));
 
     snake.forEach(num => divs[num].classList.add('snake'));
 
-    divs[head].classList.add('head');
+    divs[head].classList.add('head', direction);
 }
 
 window.addEventListener("keydown", ev => {
@@ -43,14 +56,52 @@ window.addEventListener("keydown", ev => {
 });
 
 function move(dir) {
-    if (dir === 'up') {
+    const divs = board.querySelectorAll("div");
+
+    if (dir == 'up') {
+        if (direction == 'down') {
+            return;
+        }
+
         head -= width;
-    } else if (dir === 'right') {
+
+        if (!divs[head]) {
+            alert("Game over");
+            return;
+        }
+    } else if (dir == 'right') {
+        if (direction == 'left') {
+            return;
+        }
+
         head--;
-    } else if (dir === 'down') {
+
+        if (rightBoundaries.includes(head)) {
+            alert("Game over");
+            return;
+        }
+    } else if (dir == 'down') {
+        if (direction == 'up') {
+            return;
+        }
+
         head += width;
-    } else if (dir === 'left') {
+
+        if (!divs[head]) {
+            alert("Game over");
+            return;
+        }
+    } else if (dir == 'left') {
+        if (direction == 'right') {
+            return;
+        }
+
         head++;
+
+        if (leftBoundaries.includes(head)) {
+            alert("Game over");
+            return;
+        }
     }
 
     direction = dir;

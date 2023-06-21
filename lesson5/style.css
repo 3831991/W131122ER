@@ -55,5 +55,21 @@ h1 {
 
 .head {
     background-color: #4c00d0;
+}
+
+.head.up {
+    border-radius: 6px 6px 0 0;
+}
+
+.head.right {
+    border-radius: 0 6px 6px 0;
     
+}
+
+.head.down {
+    border-radius: 0 0 6px 6px;
+}
+
+.head.left {
+    border-radius: 6px 0 0 6px;
 }
