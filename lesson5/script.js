@@ -119,6 +119,11 @@ function move(dir) {
     snake.unshift(head);
     
     if (random == head) {
+        const audio = document.createElement('audio');
+        audio.src = "Pebble.ogg";
+        audio.volume = 0.2;
+        audio.play();
+
         setRandom();
     } else {
         snake.pop();
@@ -148,6 +153,15 @@ function setRandom() {
 
 function gameOver() {
     isGameOver = true;
-    alert("Game over");
-    location.reload();
+    clearInterval(interval);
+
+    const audio = document.createElement('audio');
+    audio.src = "Country_Blues.ogg";
+    audio.volume = 0.1;
+    audio.play();
+
+    setTimeout(() => {
+        alert("Game over");
+        location.reload();
+    }, 200);
 }
