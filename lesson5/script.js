@@ -4,6 +4,9 @@ const width = 30;
 const snake = [6, 5, 4, 3, 2, 1, 0];
 let head = snake[0];
 
+let direction = 'left';
+let interval;
+
 const board = document.querySelector('.board');
 board.style.gridTemplateColumns = `repeat(${width}, 1fr)`;
 
@@ -29,19 +32,26 @@ function color() {
 
 function move(dir) {
     if (dir === 'up') {
-
+        head -= width;
     } else if (dir === 'right') {
-
+        head--;
     } else if (dir === 'down') {
-
+        head += width;
     } else if (dir === 'left') {
         head++;
     }
 
+    direction = dir;
     snake.unshift(head);
     snake.pop();
 
     color();
+    startAuto();
+}
+
+function startAuto() {
+    clearInterval(interval);
+    interval = setInterval(() => move(direction), 200);
 }
 
 window.addEventListener("keydown", ev => {
