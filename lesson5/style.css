@@ -48,3 +48,12 @@ h1 {
     align-items: center;
     justify-content: center;
 }
+
+.snake {
+    background-color: #5c00ff;
+}
+
+.head {
+    background-color: #4c00d0;
+    
+}
