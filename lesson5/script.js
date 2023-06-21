@@ -30,6 +30,18 @@ function color() {
     divs[head].classList.add('head');
 }
 
+window.addEventListener("keydown", ev => {
+    ev.preventDefault();
+
+    switch (ev.key) {
+        case 'ArrowUp': move('up'); break;
+        case 'ArrowRight': move('right'); break;
+        case 'ArrowDown': move('down'); break;
+        case 'ArrowLeft': move('left'); break;
+        case 'Escape': clearInterval(interval); break;
+    }
+});
+
 function move(dir) {
     if (dir === 'up') {
         head -= width;
@@ -53,14 +65,3 @@ function startAuto() {
     clearInterval(interval);
     interval = setInterval(() => move(direction), 200);
 }
-
-window.addEventListener("keydown", ev => {
-    ev.preventDefault();
-
-    switch (ev.key) {
-        case 'ArrowUp': move('up'); break;
-        case 'ArrowRight': move('right'); break;
-        case 'ArrowDown': move('down'); break;
-        case 'ArrowLeft': move('left'); break;
-    }
-});
