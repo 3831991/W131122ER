@@ -117,7 +117,12 @@ function move(dir) {
 
     direction = dir;
     snake.unshift(head);
-    snake.pop();
+    
+    if (random == head) {
+        setRandom();
+    } else {
+        snake.pop();
+    }
 
     color();
     startAuto();
