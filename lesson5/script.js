@@ -16,7 +16,7 @@ for (let i = 0; i < height; i++) {
 }
 
 // גבולות שמאל
-for (let i = 0; i < height; i++) {
+for (let i = 1; i <= height; i++) {
     leftBoundaries.push(i * width);
 }
 
