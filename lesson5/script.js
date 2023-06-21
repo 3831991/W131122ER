@@ -1,5 +1,5 @@
-const height = 40;
-const width = 50;
+const height = 20;
+const width = 20;
 
 const snake = [5, 4, 3, 2, 1, 0];
 let head = snake[0];
