@@ -10,6 +10,9 @@ class Gallery {
 
         this.imgElem = document.createElement("img");
         this.imgElem.addEventListener('click', () => this.nextImage());
+        this.imgElem.addEventListener('contextmenu', ev => {
+            ev.preventDefault();
+        });
         galleryElem.appendChild(this.imgElem);
 
         this.nextImage();
