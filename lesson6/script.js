@@ -7,14 +7,22 @@ class Gallery {
         this.images = imageUrls;
 
         const galleryElem = document.getElementById(elemId);
+        galleryElem.classList.add("gallery");
 
+        // יצירת אלמנט של התמונה
         this.imgElem = document.createElement("img");
+
+        // הוספת אירועים לתמונות
         this.imgElem.addEventListener('click', () => this.nextImage());
         this.imgElem.addEventListener('contextmenu', ev => {
             ev.preventDefault();
+            this.prevImage();
         });
+
+        // הוספת התמונה לדף
         galleryElem.appendChild(this.imgElem);
 
+        // לצורך הצגת התמונה הראשונה
         this.nextImage();
     }
 
@@ -23,6 +31,16 @@ class Gallery {
 
         if (this.currentImage >= this.images.length) {
             this.currentImage = 0;
+        }
+
+        this.imgElem.src = this.images[this.currentImage];
+    }
+
+    prevImage() {
+        this.currentImage--;
+
+        if (this.currentImage < 0) {
+            this.currentImage = this.images.length - 1;
         }
 
         this.imgElem.src = this.images[this.currentImage];
