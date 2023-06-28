@@ -11,12 +11,10 @@ class Gallery {
 
         const right = document.createElement('div');
         right.classList.add('arrow', 'right');
-        right.innerHTML = "<<";
         galleryElem.appendChild(right);
 
         const left = document.createElement('div');
         left.classList.add('arrow', 'left');
-        left.innerHTML = ">>";
         galleryElem.appendChild(left);
 
         // יצירת אלמנט של התמונה

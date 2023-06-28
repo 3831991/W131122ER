@@ -69,3 +69,11 @@ img {
     border-radius: 0 8px 8px 0;
     left: 0;
 }
+
+.arrow.right::after {
+    content: "<<"
+}
+
+.arrow.left::after {
+    content: ">>"
+}
