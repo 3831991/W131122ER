@@ -26,8 +26,17 @@ class Gallery {
         this.imgElem = document.createElement("img");
 
         // הוספת אירועים לגלרייה
-        galleryElem.addEventListener('mouseover', () => this.stopAuto());
-        galleryElem.addEventListener('mouseout', () => this.startAuto());
+        galleryElem.addEventListener('mouseover', () => {
+            this.stopAuto();
+        });
+
+        galleryElem.addEventListener('mouseout', () => {
+            const myEvent = new CustomEvent("startAllGallery");
+            dispatchEvent(myEvent);
+        });
+
+        // הוספת אירועים כלליים שיודעים להאזין לכל הגלריות הפעילות
+        addEventListener('startAllGallery', () => this.startAuto());
 
         // הוספת התמונה לדף
         galleryElem.appendChild(this.imgElem);
