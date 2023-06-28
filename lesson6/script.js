@@ -9,10 +9,12 @@ class Gallery {
         const galleryElem = document.getElementById(elemId);
         galleryElem.classList.add("gallery");
 
+        // הוספת הלחצן הימני
         const right = document.createElement('div');
         right.classList.add('arrow', 'right');
         galleryElem.appendChild(right);
 
+        // הוספת הלחצן השמאלי
         const left = document.createElement('div');
         left.classList.add('arrow', 'left');
         galleryElem.appendChild(left);
