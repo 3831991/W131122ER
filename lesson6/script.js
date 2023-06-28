@@ -31,11 +31,12 @@ class Gallery {
         });
 
         galleryElem.addEventListener('mouseout', () => {
+            // כשמפעילים מחדש את הגלרייה זורקים אירוע כללי שמעדכן את כל הגלריות להסתנכרן
             const myEvent = new CustomEvent("startAllGallery");
             dispatchEvent(myEvent);
         });
 
-        // הוספת אירועים כלליים שיודעים להאזין לכל הגלריות הפעילות
+        // הוספת אירוע כללי שיודע להאזין לכל הגלריות ע"מ לסנכרן אותם בקצב
         addEventListener('startAllGallery', () => this.startAuto());
 
         // הוספת התמונה לדף
