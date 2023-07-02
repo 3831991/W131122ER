@@ -50,8 +50,35 @@ function handelUserData(user = null) {
         divLogin.style.display = 'none';
         divUser.style.display = 'block';
         divUser.innerHTML = `${user.fullName} מחובר!`;
+        getProducts();
     } else {
         divLogin.style.display = 'block';
         divUser.style.display = 'none';
     }
+}
+
+function getProducts() {
+    fetch("https://api.shipap.co.il/products", {
+        credentials: 'include',
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.querySelector(".products").style.display = "block";
+        const tbody = document.querySelector(".products tbody");
+        tbody.innerHTML = '';
+
+        data.forEach((p, i) => {
+            const tr = document.createElement("tr");
+
+            tr.innerHTML = `
+                <td>${i + 1}</td>
+                <td>${p.name}</td>
+                <td>${p.price}</td>
+                <td>${p.discount}</td>
+                <td></td>
+            `;
+
+            tbody.appendChild(tr);
+        });
+    });
 }
