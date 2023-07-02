@@ -82,3 +82,30 @@ function getProducts() {
         });
     });
 }
+
+function addProduct() {
+    const name = document.querySelector('#name');
+    const price = document.querySelector('#price');
+    const discount = document.querySelector('#discount');
+
+    const obj = {
+        name: name.value,
+        price: +price.value,
+        discount: +discount.value,
+    };
+
+    name.value = '';
+    price.value = '';
+    discount.value = '';
+
+    fetch("https://api.shipap.co.il/products", {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(obj),
+    })
+    .then(res => res.json())
+    .then(data => getProducts());
+}
