@@ -1,3 +1,4 @@
+// פונקציה הבודקת בהפעל האתר האם היוזר מחובר 
 function loginStatus() {
     fetch("https://api.shipap.co.il/login", {
         credentials: 'include', // מאפשר שליחה וקבלה של עוגיות
@@ -12,12 +13,14 @@ function loginStatus() {
     });
 }
 
+// פונקציה של התחברות יוזר לשרת
 function login() {
     const obj = {
         userName: document.querySelector('#userName').value,
         password: document.querySelector('input[type=password]').value,
     };
 
+    // שליחה לשרת
     fetch("https://api.shipap.co.il/login", {
         method: 'POST',
         credentials: 'include', // מאפשר שליחה וקבלה של עוגיות
@@ -26,12 +29,15 @@ function login() {
         },
         body: JSON.stringify(obj), // תוכן הקריאה לשרת
     })
+    // קבלה מהשרת וטיפול בנתונים
     .then(res => res.json())
+    // התוכן שהתקבל מהפונקציה הקודמת
     .then(data => {
         if (data.status == 'success') {
             handelUserData(data.user);
         } else {
             handelUserData();
+            alert(data.message);
         }
     });
 }
