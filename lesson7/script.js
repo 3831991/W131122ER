@@ -80,6 +80,8 @@ function getProducts() {
 
             tbody.appendChild(tr);
         });
+
+        document.querySelector("tfoot td").innerHTML = data.length + 1;
     });
 }
 
