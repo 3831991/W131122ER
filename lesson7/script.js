@@ -76,7 +76,7 @@ function getProducts() {
                 <td>${p.price}</td>
                 <td>${p.discount}</td>
                 <td>
-                    <button class="remove">❌</button>
+                    <button class="remove" onclick="removeProduct(${p.id}, this)">❌</button>
                 </td>
             `;
 
@@ -112,4 +112,22 @@ function addProduct() {
     })
     .then(res => res.json())
     .then(data => getProducts());
+}
+
+function removeProduct(id, btnElem) {
+    if (!confirm("האם אתה בטוח כי ברצונך למחוק את הפריט מהרשימה שלנו?")) {
+        return;
+    }
+
+    if (!confirm("בטוח?")) {
+        return;
+    }
+
+    fetch(`https://api.shipap.co.il/products/${id}`, {
+        method: 'DELETE',
+        credentials: 'include',
+    })
+    .then(() => {
+        btnElem.closest('tr').remove();
+    })
 }
