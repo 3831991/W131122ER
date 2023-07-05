@@ -81,10 +81,11 @@ function getProducts() {
 
             tr.innerHTML = `
                 <td>${i + 1}</td>
-                <td>${p.name}</td>
-                <td>${p.price}</td>
-                <td>${p.discount}</td>
+                <td contenteditable="true" oninput="showSaveBtn(this)" class="name">${p.name}</td>
+                <td contenteditable="true" oninput="showSaveBtn(this)" class="price">${p.price}</td>
+                <td contenteditable="true" oninput="showSaveBtn(this)" class="discount">${p.discount}</td>
                 <td>
+                    <button class="save" onclick="saveProduct(${p.id}, this)">💾</button>
                     <button class="remove" onclick="removeProduct(${p.id}, this)">❌</button>
                 </td>
             `;
@@ -94,6 +95,36 @@ function getProducts() {
 
         document.querySelector("tfoot td").innerHTML = data.length + 1;
         loader(false);
+    });
+}
+
+function showSaveBtn(tdElem) {
+    tdElem.closest('tr').querySelector('.save').style.visibility = 'visible';
+}
+
+function saveProduct(id, btnElem) {
+    const tr = btnElem.closest('tr');
+
+    const obj = {
+        name: tr.querySelector('.name').innerText,
+        price: +tr.querySelector('.price').innerText,
+        discount: +tr.querySelector('.discount').innerText,
+    };
+
+    loader(true);
+
+    fetch(`https://api.shipap.co.il/products/${id}`, {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(obj),
+    })
+    .then(() => {
+        btnElem.closest('tr').querySelector('.save').style.visibility = 'hidden';
+        loader(false);
+        snackbar("הפריט נשמר בהצלחה");
     });
 }
 
