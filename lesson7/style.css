@@ -52,7 +52,7 @@ button {
 }
 
 button:hover {
-    background-color: #a4d967;
+    filter: brightness(1.2);
 }
 
 input,
@@ -89,4 +89,21 @@ tr:nth-child(even) {
 th, td {
     padding: 6px;
     text-align: center;
+}
+
+.remove,
+.save {
+    margin: 0;
+    transition: 0.3s;
+    cursor: pointer;
+    background: none;
+}
+
+.remove:hover,
+.save:hover {
+    scale: 1.5;
+}
+
+.save {
+    visibility: hidden;
 }

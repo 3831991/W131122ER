@@ -75,7 +75,9 @@ function getProducts() {
                 <td>${p.name}</td>
                 <td>${p.price}</td>
                 <td>${p.discount}</td>
-                <td></td>
+                <td>
+                    <button class="remove">❌</button>
+                </td>
             `;
 
             tbody.appendChild(tr);
