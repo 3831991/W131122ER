@@ -1,5 +1,7 @@
 // פונקציה הבודקת בהפעל האתר האם היוזר מחובר 
 function loginStatus() {
+    loader(true);
+
     fetch("https://api.shipap.co.il/login", {
         credentials: 'include', // מאפשר שליחה וקבלה של עוגיות
     })
@@ -19,6 +21,8 @@ function login() {
         userName: document.querySelector('#userName').value,
         password: document.querySelector('input[type=password]').value,
     };
+
+    loader(true);
 
     // שליחה לשרת
     fetch("https://api.shipap.co.il/login", {
@@ -50,14 +54,19 @@ function handelUserData(user = null) {
         divLogin.style.display = 'none';
         divUser.style.display = 'block';
         divUser.innerHTML = `${user.fullName} מחובר!`;
+        snackbar(`${user.fullName} מחובר!`);
         getProducts();
     } else {
         divLogin.style.display = 'block';
         divUser.style.display = 'none';
+        snackbar(`יש להתחבר תחילה`);
+        loader(false);
     }
 }
 
 function getProducts() {
+    loader(true);
+
     fetch("https://api.shipap.co.il/products", {
         credentials: 'include',
     })
@@ -84,6 +93,7 @@ function getProducts() {
         });
 
         document.querySelector("tfoot td").innerHTML = data.length + 1;
+        loader(false);
     });
 }
 
@@ -102,6 +112,8 @@ function addProduct() {
     price.value = '';
     discount.value = '';
 
+    loader(true);
+
     fetch("https://api.shipap.co.il/products", {
         method: 'POST',
         credentials: 'include',
@@ -111,7 +123,10 @@ function addProduct() {
         body: JSON.stringify(obj),
     })
     .then(res => res.json())
-    .then(data => getProducts());
+    .then(data => {
+        getProducts();
+        snackbar("הפריט נוסף בהצלחה");
+    });
 }
 
 function removeProduct(id, btnElem) {
@@ -123,11 +138,33 @@ function removeProduct(id, btnElem) {
         return;
     }
 
+    loader(true);
+
     fetch(`https://api.shipap.co.il/products/${id}`, {
         method: 'DELETE',
         credentials: 'include',
     })
     .then(() => {
         btnElem.closest('tr').remove();
+        loader(false);
+        snackbar("הפריט נמחק בהצלחה");
     })
+}
+
+function loader(isShow) {
+    const elem = document.querySelector('.loaderFrame');
+
+    if (isShow) {
+        elem.style.display = 'flex';
+    } else {
+        elem.style.display = 'none';
+    }
+}
+
+function snackbar(text) {
+    const elem = document.querySelector("#snackbar");
+    elem.innerHTML = text;
+    elem.classList.add("show");
+
+    setTimeout(() => elem.classList.remove("show"), 3 * 1000);
 }
