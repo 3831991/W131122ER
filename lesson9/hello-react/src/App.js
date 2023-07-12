@@ -10,6 +10,7 @@ function App() {
 
       <div className="frame">
         <Navbar />
+
         <BrowserRouter>
           <Router />
         </BrowserRouter>
