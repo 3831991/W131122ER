@@ -28,7 +28,11 @@ function Gallery() {
     }
 
     function prevImage() {
-        
+        if (current === 0) {
+            setCurrent(images.length - 1);
+        } else {
+            setCurrent(current - 1);
+        }
     }
 
     return (
