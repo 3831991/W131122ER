@@ -20,12 +20,16 @@ function Gallery() {
     ];
 
     function nextImage() {
-
+        if (current >= images.length - 1) {
+            setCurrent(0);
+        } else {
+            setCurrent(current + 1);
+        }
     }
 
     return (
         <div className="gallery">
-            <img src={images[current]} />
+            <img src={images[current]} onClick={nextImage} />
         </div>
     );
 }
