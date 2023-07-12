@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import './Gallery.css';
 
 function Gallery() {
+    const [current, setCurrent] = useState(0);
+
     const images = [
         'https://3831991.github.io/W050323ER/lesson19/simple-gallery/images/%D7%AA%D7%9E%D7%95%D7%A0%D7%94%20(1).jpg',
         'https://3831991.github.io/W050323ER/lesson19/simple-gallery/images/%D7%AA%D7%9E%D7%95%D7%A0%D7%94%20(2).jpg',
@@ -16,9 +19,13 @@ function Gallery() {
         'https://3831991.github.io/W050323ER/lesson19/simple-gallery/images/%D7%AA%D7%9E%D7%95%D7%A0%D7%94%20(12).jpg',
     ];
 
+    function nextImage() {
+
+    }
+
     return (
         <div className="gallery">
-            <img src={images[0]} />
+            <img src={images[current]} />
         </div>
     );
 }
