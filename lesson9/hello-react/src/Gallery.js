@@ -27,9 +27,16 @@ function Gallery() {
         }
     }
 
+    function prevImage() {
+        
+    }
+
     return (
         <div className="gallery">
-            <img src={images[current]} onClick={nextImage} />
+            <img src={images[current]} />
+
+            <button className="right" onClick={prevImage}>⏩</button>
+            <button className="left" onClick={nextImage}>⏪</button>
         </div>
     );
 }
