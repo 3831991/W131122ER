@@ -1,4 +1,5 @@
 import Numbers from "./Numbers";
+import Square from "./Square";
 
 function Home() {
     return (
