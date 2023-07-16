@@ -1,4 +1,3 @@
-import { BrowserRouter } from 'react-router-dom';
 import './App.css';
 import Router from './Router';
 import Navbar from './components/Navbar';
@@ -10,10 +9,7 @@ function App() {
 
       <div className="frame">
         <Navbar />
-
-        <BrowserRouter>
-          <Router />
-        </BrowserRouter>
+        <Router />
       </div>
     </div>
   );
