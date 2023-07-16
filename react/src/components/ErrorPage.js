@@ -1,11 +1,9 @@
 import './ErrorPage.css';
 
-function ErrorPage() {
+export default function ErrorPage() {
     return (
         <div className="error-page">
-            404
+            <p>הדף לא קיים</p>
         </div>
-    );
+    )
 }
-
-export default ErrorPage;
