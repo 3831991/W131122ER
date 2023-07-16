@@ -8,6 +8,7 @@ function Navbar() {
                 <li><Link to="/">בית</Link></li>
                 <li><Link to="/counter">מונה</Link></li>
                 <li><Link to="/gallery">גלריה</Link></li>
+                <li><Link to="/settings">הגדרות</Link></li>
             </ul>
         </nav>
     );
