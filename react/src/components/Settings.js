@@ -1,3 +1,4 @@
+import Range from './Range';
 import './Settings.css';
 import { useState } from "react";
 
@@ -8,44 +9,48 @@ export default function Settings() {
     const [padding, setPadding] = useState(5);
     const [invertColor, setInvertColor] = useState(0);
 
-    function changeBrightness(ev) {
-        setBrightness(ev.target.value);
+    function changeBrightness(num) {
+        setBrightness(num);
         document.querySelector('html').style.filter = `invert(${invertColor}%) brightness(${brightness}%)`;
     }
 
-    function changeLetterSpacing(ev) {
-        setLetterSpacing(ev.target.value);
+    function changeLetterSpacing(num) {
+        setLetterSpacing(num);
         document.body.style.letterSpacing = `${letterSpacing}px`;
     }
 
-    function changeFontSize(ev) {
-        setFontSize(ev.target.value);
+    function changeFontSize(num) {
+        setFontSize(num);
         document.body.style.fontSize = `${fontSize}px`;
     }
 
-    function changePadding(ev) {
-        setPadding(ev.target.value);
+    function changePadding(num) {
+        setPadding(num);
         document.body.style.padding = `${padding}px`;
     }
 
-    function changeInvertColor(ev) {
-        setInvertColor(ev.target.value);
+    function changeInvertColor(num) {
+        setInvertColor(num);
         document.querySelector('html').style.filter = `invert(${invertColor}%) brightness(${brightness}%)`;
     }
 
     return (
         <div className="Settings">
-            <div className="range">
-                <b>בהירות:</b>
-                <input type="range" min={10} max={100} value={brightness} onChange={changeBrightness} />
-                <input type="number" min={10} max={100} value={brightness} onChange={changeBrightness} />
-            </div>
+            <Range 
+                title="בהירות"
+                value={brightness}
+                min={10}
+                max={100}
+                change={changeBrightness}
+            />
 
-            <div className="range">
-                <b>ריווח בין תווים:</b>
-                <input type="range" min={0} max={10} value={letterSpacing} onChange={changeLetterSpacing} />
-                <input type="number" min={0} max={10} value={letterSpacing} onChange={changeLetterSpacing} />
-            </div>
+            <Range 
+                title="ריווח בין תווים"
+                value={letterSpacing}
+                min={0}
+                max={10}
+                change={changeLetterSpacing}
+            />
 
             <div className="range">
                 <b>גודל הגופן:</b>
