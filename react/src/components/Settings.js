@@ -8,10 +8,16 @@ export default function Settings() {
     const [fontSize, setFontSize] = useState(16);
     const [padding, setPadding] = useState(5);
     const [invertColor, setInvertColor] = useState(0);
+    const [blur, setBlur] = useState(0);
+
+    function setFilter() {
+        document.querySelector('html').style.filter = `invert(${invertColor}%) brightness(${brightness}%) blur(${blur}px)`;
+        
+    }
 
     function changeBrightness(num) {
         setBrightness(num);
-        document.querySelector('html').style.filter = `invert(${invertColor}%) brightness(${brightness}%)`;
+        setFilter();
     }
 
     function changeLetterSpacing(num) {
@@ -31,7 +37,12 @@ export default function Settings() {
 
     function changeInvertColor(num) {
         setInvertColor(num);
-        document.querySelector('html').style.filter = `invert(${invertColor}%) brightness(${brightness}%)`;
+        setFilter();
+    }
+
+    function changeBlur(num) {
+        setBlur(num);
+        setFilter();
     }
 
     return (
@@ -52,23 +63,37 @@ export default function Settings() {
                 change={changeLetterSpacing}
             />
 
-            <div className="range">
-                <b>גודל הגופן:</b>
-                <input type="range" min={10} max={30} value={fontSize} onChange={changeFontSize} />
-                <input type="number" min={10} max={30} value={fontSize} onChange={changeFontSize} />
-            </div>
+            <Range 
+                title="גודל הגופן"
+                value={fontSize}
+                min={10}
+                max={30}
+                change={changeFontSize}
+            />
 
-            <div className="range">
-                <b>ריווח של הדף:</b>
-                <input type="range" min={0} max={40} value={padding} onChange={changePadding} />
-                <input type="number" min={0} max={40} value={padding} onChange={changePadding} />
-            </div>
+            <Range 
+                title="ריווח של הדף"
+                value={padding}
+                min={0}
+                max={40}
+                change={changePadding}
+            />
 
-            <div className="range">
-                <b>היפוך צבעים:</b>
-                <input type="range" min={0} max={100} value={invertColor} onChange={changeInvertColor} />
-                <input type="number" min={0} max={100} value={invertColor} onChange={changeInvertColor} />
-            </div>
+            <Range 
+                title="היפוך צבעים"
+                value={invertColor}
+                min={0}
+                max={100}
+                change={changeInvertColor}
+            />
+
+            <Range 
+                title="טשטוש"
+                value={blur}
+                min={0}
+                max={30}
+                change={changeBlur}
+            />
         </div>
     )
 }

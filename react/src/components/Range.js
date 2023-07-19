@@ -6,7 +6,7 @@ export default function Range({ title, value, min, max, change }) {
 
     function changeVal(ev) {
         setNum(ev.target.value);
-        change(num);
+        change(+num);
     }
 
     return (
