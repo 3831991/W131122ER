@@ -8,11 +8,9 @@ export default function Settings() {
     const [fontSize, setFontSize] = useState(16);
     const [padding, setPadding] = useState(5);
     const [invertColor, setInvertColor] = useState(0);
-    const [blur, setBlur] = useState(0);
 
     function setFilter() {
-        document.querySelector('html').style.filter = `invert(${invertColor}%) brightness(${brightness}%) blur(${blur}px)`;
-        
+        document.querySelector('html').style.filter = `invert(${invertColor}%) brightness(${brightness}%)`;
     }
 
     function changeBrightness(num) {
@@ -37,11 +35,6 @@ export default function Settings() {
 
     function changeInvertColor(num) {
         setInvertColor(num);
-        setFilter();
-    }
-
-    function changeBlur(num) {
-        setBlur(num);
         setFilter();
     }
 
@@ -85,14 +78,6 @@ export default function Settings() {
                 min={0}
                 max={100}
                 change={changeInvertColor}
-            />
-
-            <Range 
-                title="טשטוש"
-                value={blur}
-                min={0}
-                max={30}
-                change={changeBlur}
             />
         </div>
     )

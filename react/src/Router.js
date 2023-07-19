@@ -4,6 +4,7 @@ import Gallery from './components/Gallery';
 import Home from './components/Home';
 import ErrorPage from './components/ErrorPage';
 import Settings from './components/Settings';
+import Settings2 from './components/Settings2';
 
 function Router() {
     return (
@@ -12,6 +13,7 @@ function Router() {
             <Route path="/counter" element={<Counter />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/settings2" element={<Settings2 />} />
             <Route path="*" element={<ErrorPage />} />
         </Routes>
     );

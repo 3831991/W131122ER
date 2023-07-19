@@ -5,8 +5,8 @@ export default function Range({ title, value, min, max, change }) {
     const [num, setNum] = useState(value);
 
     function changeVal(ev) {
-        setNum(ev.target.value);
-        change(+num);
+        setNum(+ev.target.value);
+        change(num);
     }
 
     return (
