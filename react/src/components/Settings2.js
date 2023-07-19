@@ -12,7 +12,9 @@ export default function Settings2() {
     });
 
     function setParams(key, val) {
-        
+        const obj = {...settings};
+        obj[key] = val;
+        setSettings(obj);
 
         document.querySelector('html').style.filter = `invert(${settings.invertColor}%) brightness(${settings.brightness}%)`;
         document.body.style.letterSpacing = `${settings.letterSpacing}px`;
