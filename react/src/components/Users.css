@@ -21,3 +21,24 @@ th, td {
 tr:nth-child(even) {
     background-color: azure;
 }
+
+.remove,
+.save {
+    margin: 0;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.remove:hover,
+.save:hover {
+    scale: 1.5;
+}
+
+.remove {
+    background: none;
+}
+
+.save {
+    background: none;
+    visibility: hidden;
+}
