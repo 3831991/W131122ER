@@ -10,6 +10,7 @@ function Navbar() {
                 <li><Link to="/gallery">גלריה</Link></li>
                 <li><Link to="/settings">הגדרות</Link></li>
                 <li><Link to="/settings2">הגדרות 2</Link></li>
+                <li><Link to="/users">משתמשים</Link></li>
             </ul>
         </nav>
     );

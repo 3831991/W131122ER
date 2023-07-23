@@ -5,6 +5,7 @@ import Home from './components/Home';
 import ErrorPage from './components/ErrorPage';
 import Settings from './components/Settings';
 import Settings2 from './components/Settings2';
+import Users from './components/Users';
 
 function Router() {
     return (
@@ -14,6 +15,7 @@ function Router() {
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/settings2" element={<Settings2 />} />
+            <Route path="/users" element={<Users />} />
             <Route path="*" element={<ErrorPage />} />
         </Routes>
     );
