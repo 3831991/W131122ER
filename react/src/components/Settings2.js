@@ -1,6 +1,6 @@
 import Range from './Range';
 import './Settings.css';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Settings2() {
     const [settings, setSettings] = useState({
@@ -15,12 +15,19 @@ export default function Settings2() {
         const obj = {...settings};
         obj[key] = val;
         setSettings(obj);
-
-        document.querySelector('html').style.filter = `invert(${settings.invertColor}%) brightness(${settings.brightness}%)`;
-        document.body.style.letterSpacing = `${settings.letterSpacing}px`;
-        document.body.style.fontSize = `${settings.fontSize}px`;
-        document.body.style.padding = `${settings.padding}px`;
+        syncData(obj);
     }
+
+    function syncData(obj) {
+        document.querySelector('html').style.filter = `invert(${obj.invertColor}%) brightness(${obj.brightness}%)`;
+        document.body.style.letterSpacing = `${obj.letterSpacing}px`;
+        document.body.style.fontSize = `${obj.fontSize}px`;
+        document.body.style.padding = `${obj.padding}px`;
+    }
+
+    useEffect(() => {
+        syncData(settings);
+    }, []);
 
     return (
         <div className="Settings">
