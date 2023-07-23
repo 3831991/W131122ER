@@ -1,6 +1,7 @@
 import './Users.css';
 import { users } from "./UsersData";
 import { useState } from 'react';
+import moment from 'moment';
 
 export default function UsersTable() {
     const [data, setData] = useState(users);
@@ -31,7 +32,7 @@ export default function UsersTable() {
                         <td>{u.firstName} {u.lastName}</td>
                         <td>{u.email}</td>
                         <td>{u.phone}</td>
-                        <td>{u.birthday}</td>
+                        <td>{moment(u.birthday).format('DD/MM/YYYY')}</td>
                         <td>
                             <button className="remove" onClick={() => removeUser(u.id)}>❌</button>
                         </td>
