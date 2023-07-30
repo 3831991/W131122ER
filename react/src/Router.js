@@ -7,6 +7,7 @@ import Settings from './components/Settings';
 import Settings2 from './components/Settings2';
 import Users from './components/Users';
 import Contact from './components/Contact';
+import Tickets from './components/Tickets';
 
 function Router() {
     return (
@@ -18,6 +19,7 @@ function Router() {
             <Route path="/settings2" element={<Settings2 />} />
             <Route path="/users" element={<Users />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/tickets" element={<Tickets />} />
             <Route path="*" element={<ErrorPage />} />
         </Routes>
     );
