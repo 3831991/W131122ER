@@ -1,0 +1,24 @@
+table {
+    width: 100%;
+    margin-top: 12px;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: darkslateblue;
+    color: white;
+}
+
+th, td {
+    padding: 6px;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: azure;
+}
+
+tr td:nth-child(3),
+tr td:nth-child(6) {
+    word-break: break-all;
+}
