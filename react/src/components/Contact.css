@@ -31,3 +31,15 @@
     width: 100%;
     font-size: 1.2em;
 }
+
+div.fieldError {
+    background-color: #ffdcdc;
+    padding: 6px;
+    border-radius: 4px;
+    margin: -8px 0px 6px 0;
+}
+
+input.fieldError, textarea.fieldError {
+    border-color: red;
+    outline-color: red;
+}
