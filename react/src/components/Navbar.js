@@ -11,6 +11,7 @@ function Navbar() {
                 <li><Link to="/settings">הגדרות</Link></li>
                 <li><Link to="/settings2">הגדרות 2</Link></li>
                 <li><Link to="/users">משתמשים</Link></li>
+                <li><Link to="/contact">צור קשר</Link></li>
             </ul>
         </nav>
     );
