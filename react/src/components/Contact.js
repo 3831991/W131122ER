@@ -12,6 +12,8 @@ export default function Contact() {
     });
 
     const [errors, setErrors] = useState({});
+    const [isValid, setIsValid] = useState(false);
+    const [sent, setSent] = useState(false);
 
     const contactSchema = Joi.object({
         fullName: Joi.string().min(3).max(30).required(),
@@ -28,7 +30,11 @@ export default function Contact() {
             [name]: value,
         };
 
-        const schema = contactSchema.validate(obj, { abortEarly: false, messages: { he: JOI_HEBREW }, errors: { language: 'he' } });
+        const schema = contactSchema.validate(obj, {
+            abortEarly: false,
+            messages: { he: JOI_HEBREW },
+            errors: { language: 'he' }
+        });
 
         const err = {
             ...errors,
@@ -38,6 +44,9 @@ export default function Contact() {
         if (schema.error) {
             const e = schema.error.details.find(x => x.context.key === name);
             err[name] = e?.message;
+            setIsValid(false);
+        } else {
+            setIsValid(true);
         }
 
         setFormData(obj);
@@ -55,7 +64,7 @@ export default function Contact() {
             body: JSON.stringify(formData),
         })
         .then(() => {
-            console.log('Sent contact');
+            setSent(true);
         });
     }
 
@@ -63,37 +72,41 @@ export default function Contact() {
         <div className="Contact">
             <h2>טופס יצירת קשר</h2>
 
-            <form onSubmit={send}>
-                <label>
-                    שם מלא:
-                    <input type="text" name="fullName" value={formData.fullName} onChange={handelInput} />
-                </label>
+            {
+                sent ?
+                <h3>הטופס נשלח בהצלחה!</h3> :
+                <form onSubmit={send}>
+                    <label>
+                        שם מלא:
+                        <input type="text" name="fullName" value={formData.fullName} onChange={handelInput} />
+                    </label>
 
-                {errors.fullName && <div className='fieldError'>{errors.fullName}</div>}
+                    {errors.fullName && <div className='fieldError'>{errors.fullName}</div>}
 
-                <label>
-                    טלפון:
-                    <input type="tel" name="phone" value={formData.phone} onChange={handelInput} />
-                </label>
+                    <label>
+                        טלפון:
+                        <input type="tel" name="phone" value={formData.phone} onChange={handelInput} />
+                    </label>
 
-                {errors.phone && <div className='fieldError'>{errors.phone}</div>}
+                    {errors.phone && <div className='fieldError'>{errors.phone}</div>}
 
-                <label>
-                    אימייל:
-                    <input type="email" name="email" value={formData.email} onChange={handelInput} />
-                </label>
+                    <label>
+                        אימייל:
+                        <input type="email" name="email" value={formData.email} onChange={handelInput} />
+                    </label>
 
-                {errors.email && <div className='fieldError'>{errors.email}</div>}
+                    {errors.email && <div className='fieldError'>{errors.email}</div>}
 
-                <label>
-                    הודעה:
-                    <textarea name="message" value={formData.message} onChange={handelInput}></textarea>
-                </label>
+                    <label>
+                        הודעה:
+                        <textarea name="message" value={formData.message} onChange={handelInput}></textarea>
+                    </label>
 
-                {errors.message && <div className='fieldError'>{errors.message}</div>}
+                    {errors.message && <div className='fieldError'>{errors.message}</div>}
 
-                <button>שלח</button>
-            </form>
+                    <button disabled={!isValid}>שלח</button>
+                </form>
+            }
         </div>
     )
 }
