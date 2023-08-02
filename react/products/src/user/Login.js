@@ -2,6 +2,7 @@ import './User.css';
 import { useState } from 'react';
 import Joi from 'joi';
 import { JOI_HEBREW } from '../joi-hebrew';
+import Signup from './Signup';
 
 export default function Login({ success }) {
     const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ export default function Login({ success }) {
     const [errors, setErrors] = useState({});
     const [isValid, setIsValid] = useState(false);
     const [loginError, setLoginError] = useState('');
+    const [isSignup, setIsSignup] = useState(false);
 
     const loginSchema = Joi.object({
         userName: Joi.string().min(3).max(10).required(),
@@ -72,29 +74,44 @@ export default function Login({ success }) {
 
     return (
         <>
-            <div className="Login smallFrame">
-                <h2>התחברות</h2>
+            {
+                isSignup ? 
+                <>
+                    <Signup />
+                    <p className="signup">
+                        <a onClick={() => setIsSignup(false)}>להתחברות לחץ כאן</a>
+                    </p>
+                </> :
+                <>
+                    <div className="Login smallFrame">
+                        <h2>התחברות</h2>
 
-                <form onSubmit={login}>
-                    <label>
-                        שם משתמש:
-                        <input type="text" name='userName' value={formData.userName} onChange={handelInput} />
-                    </label>
+                        <form onSubmit={login}>
+                            <label>
+                                שם משתמש:
+                                <input type="text" name='userName' value={formData.userName} onChange={handelInput} />
+                            </label>
 
-                    { errors.userName ? <div className='fieldError'>{errors.userName}</div> : '' }
+                            { errors.userName ? <div className='fieldError'>{errors.userName}</div> : '' }
 
-                    <label>
-                        סיסמה:
-                        <input type="password" name='password' value={formData.password} onChange={handelInput} />
-                    </label>
+                            <label>
+                                סיסמה:
+                                <input type="password" name='password' value={formData.password} onChange={handelInput} />
+                            </label>
 
-                    { errors.password ? <div className='fieldError'>{errors.password}</div> : '' }
+                            { errors.password ? <div className='fieldError'>{errors.password}</div> : '' }
 
-                    <button>התחבר</button>
+                            <button>התחבר</button>
 
-                    { loginError ? <div className='fieldError'>{loginError}</div> : '' }
-                </form>
-            </div>
+                            { loginError ? <div className='fieldError'>{loginError}</div> : '' }
+                        </form>
+                    </div>
+
+                    <p className="signup">
+                        <a onClick={() => setIsSignup(true)}>להרשמה לחץ כאן</a>
+                    </p>
+                </>
+            }
         </>
     )
 }
