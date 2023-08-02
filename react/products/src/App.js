@@ -15,14 +15,18 @@ function App() {
         .then(res => res.json())
         .then(data => {
             if (data.status === 'success') {
-                setUser(data.user);
-                setIsLogged(true);
+                updateUser(data.user);
             } else {
                 setUser();
                 setIsLogged(false);
             }
         });
     }, []);
+
+    const updateUser = user => {
+        setUser(user);
+        setIsLogged(true);
+    }
 
     return (
         <>
@@ -38,7 +42,7 @@ function App() {
                                 <div>{user.fullName} מחובר! <Logout /></div>
                                 <Products />
                             </> :
-                            <Login />
+                            <Login success={updateUser} />
                         }
                     </div>
                 </div>

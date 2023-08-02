@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Joi from 'joi';
 import { JOI_HEBREW } from '../joi-hebrew';
 
-export default function Login() {
+export default function Login({ success }) {
     const [formData, setFormData] = useState({
         userName: '',
         password: '',
@@ -32,7 +32,7 @@ export default function Login() {
         .then(res => res.json())
         .then(data => {
             if (data.status === 'success') {
-                // ההתחבות בוצעה בהצלחה
+                success(data.user);
             } else {
                 setLoginError(data.message);
             }
