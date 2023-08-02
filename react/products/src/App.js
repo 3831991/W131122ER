@@ -2,6 +2,7 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import Products from './products/Products';
 import Login from './user/Login';
+import Logout from './user/Logout';
 
 function App() {
     const [user, setUser] = useState();
@@ -24,15 +25,26 @@ function App() {
     }, []);
 
     return (
-        <div className="App">
-            <h1>ניהול מוצרים</h1>
+        <>
+            {
+                isLogged === undefined ? '' : 
+                <div className="App">
+                    <h1>ניהול מוצרים</h1>
 
-            <div className="frame">
-                {
-                    isLogged ? <Products /> : <Login />
-                }
-            </div>
-        </div>
+                    <div className="frame">
+                        {
+                            isLogged ?
+                            <>
+                                <div>{user.fullName} מחובר! <Logout /></div>
+                                <Products />
+                            </> :
+                            <Login />
+                        }
+                    </div>
+                </div>
+            }
+        </>
+        
     );
 }
 
