@@ -28,6 +28,11 @@ function App() {
         setIsLogged(true);
     }
 
+    const clearUser = () => {
+        setUser();
+        setIsLogged(false);
+    }
+
     return (
         <>
             {
@@ -39,7 +44,7 @@ function App() {
                         {
                             isLogged ?
                             <>
-                                <div>{user.fullName} מחובר! <Logout /></div>
+                                <div>{user.fullName} מחובר! <Logout success={clearUser} /></div>
                                 <Products />
                             </> :
                             <Login success={updateUser} />
