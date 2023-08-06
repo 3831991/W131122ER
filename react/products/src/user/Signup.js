@@ -31,7 +31,7 @@ export default function Signup({ success }) {
         .then(res => res.json())
         .then(data => {
             if (data.status === 'success') {
-
+                success(data.user);
             } else {
                 setSignupError(data.message);
             }
