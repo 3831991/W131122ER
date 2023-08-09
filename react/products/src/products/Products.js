@@ -14,5 +14,21 @@ export default function Products() {
         });
     }, []);
 
-    return <p>Products works</p>
+    return (
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>שם המוצר</th>
+                    <th>מחיר</th>
+                    <th>הנחה</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+
+            </tbody>
+        </table>
+    )
 }
