@@ -29,7 +29,7 @@ export default function Tickets() {
                 <tbody>
                 {
                     data.map((t, i) => 
-                        <tr>
+                        <tr key={t.id}>
                             <td>{i + 1}</td>
                             <td>{moment(t.createTime).format('D.M.YY')}</td>
                             <td>{t.fullName}</td>
