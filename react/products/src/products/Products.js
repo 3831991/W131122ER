@@ -21,7 +21,7 @@ export default function Products() {
             method: 'DELETE',
         })
         .then(() => {
-            
+            setProducts(products.filter(x => x.id !== id));
         });
     }
 
