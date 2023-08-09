@@ -123,6 +123,7 @@ textarea.fieldError {
 
 .remove {
   background: none;
+  color: #721e1e;
 }
 
 button.logout {

@@ -1,5 +1,6 @@
 import './Products.css';
 import { useEffect, useState } from 'react';
+import { AiFillDelete } from "react-icons/ai";
 
 export default function Products() {
     const [products, setProducts] = useState([]);
@@ -26,8 +27,19 @@ export default function Products() {
                 </tr>
             </thead>
             <tbody>
-
-
+                {
+                    products.map((p, i) => 
+                        <tr key={p.id}>
+                            <td>{i + 1}</td>
+                            <td>{p.name}</td>
+                            <td>{p.price}</td>
+                            <td>{p.discount}</td>
+                            <td>
+                                <button className='remove'><AiFillDelete /></button>
+                            </td>
+                        </tr>
+                    )
+                }
             </tbody>
         </table>
     )
