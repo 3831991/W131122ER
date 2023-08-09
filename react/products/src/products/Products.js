@@ -15,6 +15,16 @@ export default function Products() {
         });
     }, []);
 
+    function removeProduct(id) {
+        fetch(`https://api.shipap.co.il/products/${id}`, {
+            credentials: 'include',
+            method: 'DELETE',
+        })
+        .then(() => {
+            
+        });
+    }
+
     return (
         <table>
             <thead>
@@ -35,7 +45,7 @@ export default function Products() {
                             <td>{p.price}</td>
                             <td>{p.discount}</td>
                             <td>
-                                <button className='remove'><AiFillDelete /></button>
+                                <button className='remove' onClick={() => removeProduct(p.id)}><AiFillDelete /></button>
                             </td>
                         </tr>
                     )
