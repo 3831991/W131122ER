@@ -28,14 +28,21 @@ export default function Signup({ success }) {
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify(formData),
         })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
-                success(data.user);
+        .then(res => {
+            if (res.ok) {
+                return res.json();
             } else {
-                setSignupError(data.message);
+                return res.text().then(x => {
+                    throw new Error(x);
+                });
             }
         })
+        .then(data => {
+            success(data);
+        })
+        .catch(err => {
+            setSignupError(err.message);
+        });
     }
 
     return (

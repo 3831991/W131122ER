@@ -12,14 +12,21 @@ function App() {
         fetch("https://api.shipap.co.il/login", {
             credentials: 'include',
         })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
-                updateUser(data.user);
+        .then(res => {
+            if (res.ok) {
+                return res.json();
             } else {
-                setUser();
-                setIsLogged(false);
+                return res.text().then(x => {
+                    throw new Error(x);
+                });
             }
+        })
+        .then(data => {
+            updateUser(data);
+        })
+        .catch(err => {
+            setUser();
+            setIsLogged(false);
         });
     }, []);
 

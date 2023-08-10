@@ -31,13 +31,20 @@ export default function Login({ success }) {
             },
             body: JSON.stringify(formData),
         })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
-                success(data.user);
+        .then(res => {
+            if (res.ok) {
+                return res.json();
             } else {
-                setLoginError(data.message);
+                return res.text().then(x => {
+                    throw new Error(x);
+                });
             }
+        })
+        .then(data => {
+            success(data);
+        })
+        .catch(err => {
+            setLoginError(err.message);
         });
     }
 
