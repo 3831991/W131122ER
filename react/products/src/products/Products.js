@@ -32,7 +32,7 @@ export default function Products() {
 
     return (
         <>
-            <AddProduct />
+            <AddProduct added={newProduct => setProducts([...products, newProduct])} />
 
             <table>
                 <thead>

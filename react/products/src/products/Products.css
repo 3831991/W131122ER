@@ -83,3 +83,7 @@ td {
         transform: translateY(100px);
     }
 }
+
+.addBtn {
+    width: initial;
+}

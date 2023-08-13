@@ -1,17 +1,83 @@
+import { useState } from 'react';
 import './Products.css';
 
-export default function AddProduct() {
+export default function AddProduct({ added }) {
+    const [isModal, setIsModal] = useState(false);
+    const [formData, setFormData] = useState({
+        name: "",
+        price: 0,
+        discount: 0,
+    });
+
+    const inputChange = ev => {
+        const { name, value } = ev.target;
+
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    }
+
+    const save = ev => {
+        ev.preventDefault();
+
+        if (!formData.name) {
+            alert("ממש מצחיק");
+            return;
+        }
+
+        if (!formData.price) {
+            alert("ממש עצוב");
+            return;
+        }
+
+        fetch(`https://api.shipap.co.il/products`, {
+            credentials: 'include',
+            method: 'POST',
+            headers: { 'Content-type': 'application/json' },
+            body: JSON.stringify(formData),
+        })
+        .then(res => res.json())
+        .then(data => {
+            added(data);
+            setIsModal(false);
+        });
+    }
 
     return (
-        <div className="modal-frame">
-            <div className="modal">
-                <header>
-                    <button className="close">x</button>
-                    <h2>מוצר חדש</h2>
-                </header>
+        <>
+            <button className='addBtn' onClick={() => setIsModal(true)}>+ מוצר חדש</button>
 
-                
-            </div>
-        </div>
+            {
+                isModal &&
+                <div className="modal-frame">
+                    <div className="modal">
+                        <header>
+                            <button className="close" onClick={() => setIsModal(false)}>x</button>
+                            <h2>מוצר חדש</h2>
+                        </header>
+
+                        <form onSubmit={save}>
+                            <label>
+                                שם המוצר:
+                                <input type="text" name="name" value={formData.name} onChange={inputChange} />
+                            </label>
+
+                            <label>
+                                מחיר:
+                                <input type="number" name="price" value={formData.price} onChange={inputChange} />
+                            </label>
+
+                            <label>
+                                הנחה:
+                                <input type="number" name="discount" value={formData.discount} onChange={inputChange} />
+                            </label>
+
+                            <button>הוסף מוצר</button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </>
     )
 }
