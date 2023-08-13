@@ -1,6 +1,6 @@
 import './Products.css';
 import { useEffect, useState } from 'react';
-import { AiFillDelete } from "react-icons/ai";
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import AddProduct from './AddProduct';
 
 export default function Products() {
@@ -53,6 +53,7 @@ export default function Products() {
                                 <td>{p.price}</td>
                                 <td>{p.discount}</td>
                                 <td>
+                                    <button className='edit' onClick={() => removeProduct(p.id)}><AiFillEdit /></button>
                                     <button className='remove' onClick={() => removeProduct(p.id)}><AiFillDelete /></button>
                                 </td>
                             </tr>

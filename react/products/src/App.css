@@ -110,20 +110,25 @@ textarea.fieldError {
 }
 
 .remove,
-.save {
+.edit {
   margin: 0;
   transition: 0.3s;
   cursor: pointer;
+  background: none;
+  width: initial;
 }
 
 .remove:hover,
-.save:hover {
+.edit:hover {
   scale: 1.5;
 }
 
 .remove {
-  background: none;
   color: #721e1e;
+}
+
+.edit {
+  color: #251e72;
 }
 
 button.logout {

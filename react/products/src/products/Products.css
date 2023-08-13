@@ -23,6 +23,11 @@ td {
     text-align: center;
 }
 
+tr td:last-child {
+    display: flex;
+    justify-content: end;
+}
+
 .modal-frame {
     background-color: #00000098;
     position: fixed;
@@ -31,7 +36,6 @@ td {
     right: 0;
     bottom: 0;
 }
-
 
 .modal {
     position: relative;
