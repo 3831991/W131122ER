@@ -1,9 +1,11 @@
 import './App.css';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Products from './products/Products';
 import Login from './user/Login';
 import Logout from './user/Logout';
 import Loader from './components/Loader';
+
+export const GeneralContext = React.createContext();
 
 function App() {
     const [user, setUser] = useState();
@@ -46,7 +48,7 @@ function App() {
     }
 
     return (
-        <>
+        <GeneralContext.Provider value={{ setIsLoader, user, setUser, isLogged, setIsLogged }}>
             {
                 isLogged === undefined ? '' : 
                 <div className="App">
@@ -66,8 +68,7 @@ function App() {
                     </div>
                 </div>
             }
-        </>
-        
+        </GeneralContext.Provider>
     );
 }
 
