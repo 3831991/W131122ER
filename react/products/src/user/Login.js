@@ -1,8 +1,9 @@
 import './User.css';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Joi from 'joi';
 import { JOI_HEBREW } from '../joi-hebrew';
 import Signup from './Signup';
+import { GeneralContext } from '../App';
 
 export default function Login({ success }) {
     const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ export default function Login({ success }) {
     const [isValid, setIsValid] = useState(false);
     const [loginError, setLoginError] = useState('');
     const [isSignup, setIsSignup] = useState(false);
+    const { setIsLoader } = useContext(GeneralContext);
 
     const loginSchema = Joi.object({
         userName: Joi.string().min(3).max(10).required(),
@@ -22,6 +24,7 @@ export default function Login({ success }) {
 
     const login = ev => {
         ev.preventDefault();
+        setIsLoader(true);
 
         fetch("https://api.shipap.co.il/login", {
             credentials: 'include',
@@ -45,7 +48,8 @@ export default function Login({ success }) {
         })
         .catch(err => {
             setLoginError(err.message);
-        });
+        })
+        .finally(() => setIsLoader(false));
     }
 
     const handelInput = ev => {

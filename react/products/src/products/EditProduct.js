@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { GeneralContext } from "../App";
 
 export default function EditProduct({ product, edited }) {
     const [formData, setFormData] = useState();
+    const { setIsLoader } = useContext(GeneralContext);
 
     useEffect(() => {
         if (product) {
@@ -34,6 +36,8 @@ export default function EditProduct({ product, edited }) {
             return;
         }
 
+        setIsLoader(true);
+
         fetch(`https://api.shipap.co.il/products/${formData.id}`, {
             credentials: 'include',
             method: 'PUT',
@@ -42,6 +46,7 @@ export default function EditProduct({ product, edited }) {
         })
         .then(() => {
             edited(formData);
+            setIsLoader(false);
         });
     }
 

@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import './User.css';
+import { GeneralContext } from '../App';
 
 export default function Signup({ success }) {
     const [formData, setFormData] = useState({
@@ -9,6 +10,7 @@ export default function Signup({ success }) {
         fullName: '',
     });
     const [signupError, setSignupError] = useState('');
+    const { setIsLoader } = useContext(GeneralContext);
 
     const handelInput = ev => {
         const { name, value } = ev.target;
@@ -21,6 +23,7 @@ export default function Signup({ success }) {
 
     const signup = ev => {
         ev.preventDefault();
+        setIsLoader(true);
 
         fetch("https://api.shipap.co.il/signup", {
             credentials: 'include',
@@ -42,7 +45,8 @@ export default function Signup({ success }) {
         })
         .catch(err => {
             setSignupError(err.message);
-        });
+        })
+        .finally(() => setIsLoader(false));
     }
 
     return (

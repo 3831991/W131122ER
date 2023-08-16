@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import './Products.css';
+import { GeneralContext } from '../App';
 
 export default function AddProduct({ added }) {
     const [isModal, setIsModal] = useState(false);
@@ -8,6 +9,7 @@ export default function AddProduct({ added }) {
         price: 0,
         discount: 0,
     });
+    const { setIsLoader } = useContext(GeneralContext);
 
     const inputChange = ev => {
         const { name, value } = ev.target;
@@ -31,6 +33,8 @@ export default function AddProduct({ added }) {
             return;
         }
 
+        setIsLoader(true);
+
         fetch(`https://api.shipap.co.il/products`, {
             credentials: 'include',
             method: 'POST',
@@ -41,6 +45,7 @@ export default function AddProduct({ added }) {
         .then(data => {
             added(data);
             setIsModal(false);
+            setIsLoader(false);
         });
     }
 

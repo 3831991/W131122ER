@@ -28,12 +28,15 @@ export default function Products() {
             return;
         }
 
+        setIsLoader(true);
+
         fetch(`https://api.shipap.co.il/products/${id}`, {
             credentials: 'include',
             method: 'DELETE',
         })
         .then(() => {
             setProducts(products.filter(x => x.id !== id));
+            setIsLoader(false);
         });
     }
 
@@ -65,7 +68,7 @@ export default function Products() {
                 <tbody>
                     {
                         products.map((p, i) => 
-                            <tr key={p.id}>
+                            <tr key={p.id} onDoubleClick={() => setProductEdited(p)}>
                                 <td>{i + 1}</td>
                                 <td>{p.name}</td>
                                 <td>{p.price}</td>
