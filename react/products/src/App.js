@@ -3,10 +3,12 @@ import { useEffect, useState } from 'react';
 import Products from './products/Products';
 import Login from './user/Login';
 import Logout from './user/Logout';
+import Loader from './components/Loader';
 
 function App() {
     const [user, setUser] = useState();
     const [isLogged, setIsLogged] = useState();
+    const [isLoader, setIsLoader] = useState(true);
 
     useEffect(() => {
         fetch("https://api.shipap.co.il/login", {
@@ -27,6 +29,9 @@ function App() {
         .catch(err => {
             setUser();
             setIsLogged(false);
+        })
+        .finally(() => {
+            setIsLoader(false);
         });
     }, []);
 
@@ -56,6 +61,8 @@ function App() {
                             </> :
                             <Login success={updateUser} />
                         }
+
+                        {isLoader && <Loader />}
                     </div>
                 </div>
             }
