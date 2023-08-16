@@ -40,7 +40,7 @@ function App() {
     return (
         <GeneralContext.Provider value={{ setIsLoader, user, setUser, isLogged, setIsLogged }}>
             {
-                isLogged === undefined && 
+                isLogged !== undefined && 
                 <div className="App">
                     <h1>ניהול מוצרים</h1>
 
