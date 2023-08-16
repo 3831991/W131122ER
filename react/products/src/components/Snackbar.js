@@ -1,5 +1,5 @@
 import './Snackbar.css';
 
 export default function Snackbar({ text }) {
-    return <div className='snackbar'>{text}</div>
+    return <div id='snackbar'>{text}</div>
 }
