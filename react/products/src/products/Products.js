@@ -4,11 +4,12 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import AddProduct from './AddProduct';
 import EditProduct from './EditProduct';
 import { GeneralContext } from '../App';
+import Logout from '../user/Logout';
 
 export default function Products() {
     const [products, setProducts] = useState([]);
     const [productEdited, setProductEdited] = useState();
-    const { setIsLoader } = useContext(GeneralContext);
+    const { setIsLoader, user } = useContext(GeneralContext);
 
     useEffect(() => {
         setIsLoader(true);
@@ -52,6 +53,7 @@ export default function Products() {
 
     return (
         <>
+            <div>{user.fullName} מחובר! <Logout /></div>
             <AddProduct added={newProduct => setProducts([...products, newProduct])} />
             <EditProduct product={productEdited} edited={update} />
 

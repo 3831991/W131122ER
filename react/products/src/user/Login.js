@@ -5,7 +5,7 @@ import { JOI_HEBREW } from '../joi-hebrew';
 import Signup from './Signup';
 import { GeneralContext } from '../App';
 
-export default function Login({ success }) {
+export default function Login() {
     const [formData, setFormData] = useState({
         userName: '',
         password: '',
@@ -15,7 +15,7 @@ export default function Login({ success }) {
     const [isValid, setIsValid] = useState(false);
     const [loginError, setLoginError] = useState('');
     const [isSignup, setIsSignup] = useState(false);
-    const { setIsLoader } = useContext(GeneralContext);
+    const { setIsLoader, setUser, setIsLogged } = useContext(GeneralContext);
 
     const loginSchema = Joi.object({
         userName: Joi.string().min(3).max(10).required(),
@@ -44,7 +44,8 @@ export default function Login({ success }) {
             }
         })
         .then(data => {
-            success(data);
+            setUser(data);
+            setIsLogged(true);
         })
         .catch(err => {
             setLoginError(err.message);

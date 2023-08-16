@@ -2,8 +2,8 @@ import { useContext } from 'react';
 import './User.css';
 import { GeneralContext } from '../App';
 
-export default function Logout({ success }) {
-    const { setIsLoader } = useContext(GeneralContext);
+export default function Logout() {
+    const { setIsLoader, setUser, setIsLogged } = useContext(GeneralContext);
 
     const logout = () => {
         setIsLoader(true);
@@ -12,7 +12,8 @@ export default function Logout({ success }) {
             credentials: 'include',
         })
         .then(() => {
-            success();
+            setUser();
+            setIsLogged(false);
             setIsLoader(false);
         });
     }

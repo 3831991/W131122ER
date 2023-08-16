@@ -2,7 +2,6 @@ import './App.css';
 import React, { useEffect, useState } from 'react';
 import Products from './products/Products';
 import Login from './user/Login';
-import Logout from './user/Logout';
 import Loader from './components/Loader';
 
 export const GeneralContext = React.createContext();
@@ -26,7 +25,8 @@ function App() {
             }
         })
         .then(data => {
-            updateUser(data);
+            setUser(data);
+            setIsLogged(true);
         })
         .catch(err => {
             setUser();
@@ -37,33 +37,15 @@ function App() {
         });
     }, []);
 
-    const updateUser = user => {
-        setUser(user);
-        setIsLogged(true);
-    }
-
-    const clearUser = () => {
-        setUser();
-        setIsLogged(false);
-    }
-
     return (
         <GeneralContext.Provider value={{ setIsLoader, user, setUser, isLogged, setIsLogged }}>
             {
-                isLogged === undefined ? '' : 
+                isLogged === undefined && 
                 <div className="App">
                     <h1>ניהול מוצרים</h1>
 
                     <div className="frame">
-                        {
-                            isLogged ?
-                            <>
-                                <div>{user.fullName} מחובר! <Logout success={clearUser} /></div>
-                                <Products />
-                            </> :
-                            <Login success={updateUser} />
-                        }
-
+                        {isLogged ? <Products /> : <Login />}
                         {isLoader && <Loader />}
                     </div>
                 </div>
