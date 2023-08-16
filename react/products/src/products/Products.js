@@ -45,7 +45,7 @@ export default function Products() {
     return (
         <>
             <AddProduct added={newProduct => setProducts([...products, newProduct])} />
-            <EditProduct product={productEdited} productChange={update} />
+            <EditProduct product={productEdited} edited={update} />
 
             <table>
                 <thead>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function EditProduct({ product, productChange }) {
+export default function EditProduct({ product, edited }) {
     const [formData, setFormData] = useState();
 
     useEffect(() => {
@@ -20,6 +20,7 @@ export default function EditProduct({ product, productChange }) {
         });
     }
 
+    
     const save = ev => {
         ev.preventDefault();
 
@@ -33,14 +34,14 @@ export default function EditProduct({ product, productChange }) {
             return;
         }
 
-        fetch(`https://api.shipap.co.il/products/${product.id}`, {
+        fetch(`https://api.shipap.co.il/products/${formData.id}`, {
             credentials: 'include',
             method: 'PUT',
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify(formData),
         })
         .then(() => {
-            productChange(formData);
+            edited(formData);
         });
     }
 
@@ -51,7 +52,7 @@ export default function EditProduct({ product, productChange }) {
                 <div className="modal-frame">
                     <div className="modal">
                         <header>
-                            <button className="close" onClick={() => productChange()}>x</button>
+                            <button className="close" onClick={() => edited()}>x</button>
                             <h2>עריכת מוצר</h2>
                         </header>
 
@@ -71,7 +72,7 @@ export default function EditProduct({ product, productChange }) {
                                 <input type="number" name="discount" value={formData.discount} onChange={inputChange} />
                             </label>
 
-                            <button>שמור מוצר</button>
+                            <button>שמירה</button>
                         </form>
                     </div>
                 </div>
