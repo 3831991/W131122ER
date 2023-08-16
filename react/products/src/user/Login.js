@@ -91,7 +91,7 @@ export default function Login() {
             {
                 isSignup ? 
                 <>
-                    <Signup success={user => { setFormData({ ...formData, userName: user.userName }) }} />
+                    <Signup success={user => { setFormData({ ...formData, userName: user.userName }); setIsSignup(false) }} />
                     <p className="signup">
                         <a onClick={() => setIsSignup(false)}>להתחברות לחץ כאן</a>
                     </p>
