@@ -10,7 +10,7 @@ export default function Signup({ success }) {
         fullName: '',
     });
     const [signupError, setSignupError] = useState('');
-    const { setIsLoader } = useContext(GeneralContext);
+    const { setIsLoader, snackbar } = useContext(GeneralContext);
 
     const handelInput = ev => {
         const { name, value } = ev.target;
@@ -42,9 +42,11 @@ export default function Signup({ success }) {
         })
         .then(data => {
             success(data);
+            snackbar('המשתמש נוצר בהצלחה');
         })
         .catch(err => {
             setSignupError(err.message);
+            snackbar(err.message);
         })
         .finally(() => setIsLoader(false));
     }

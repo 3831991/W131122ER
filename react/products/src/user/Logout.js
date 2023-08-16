@@ -3,7 +3,7 @@ import './User.css';
 import { GeneralContext } from '../App';
 
 export default function Logout() {
-    const { setIsLoader, setUser, setIsLogged } = useContext(GeneralContext);
+    const { setIsLoader, setUser, setIsLogged, snackbar } = useContext(GeneralContext);
 
     const logout = () => {
         setIsLoader(true);
@@ -15,6 +15,7 @@ export default function Logout() {
             setUser();
             setIsLogged(false);
             setIsLoader(false);
+            snackbar('המשתמש התנתק בהצלחה');
         });
     }
 

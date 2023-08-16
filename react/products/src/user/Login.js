@@ -15,7 +15,7 @@ export default function Login() {
     const [isValid, setIsValid] = useState(false);
     const [loginError, setLoginError] = useState('');
     const [isSignup, setIsSignup] = useState(false);
-    const { setIsLoader, setUser, setIsLogged } = useContext(GeneralContext);
+    const { setIsLoader, setUser, setIsLogged, snackbar } = useContext(GeneralContext);
 
     const loginSchema = Joi.object({
         userName: Joi.string().min(3).max(10).required(),
@@ -46,9 +46,11 @@ export default function Login() {
         .then(data => {
             setUser(data);
             setIsLogged(true);
+            snackbar(`${data.fullName} מחובר`);
         })
         .catch(err => {
             setLoginError(err.message);
+            snackbar(err.message);
         })
         .finally(() => setIsLoader(false));
     }
