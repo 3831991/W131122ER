@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { Router } from './Router';
+import { Router, RouterAuth } from './Router';
 import Loader from './components/Loader';
 import Snackbar from './components/Snackbar';
 
@@ -43,7 +43,7 @@ function App() {
             <h1>ניהול כתבות</h1>
 
             <div className="frame">
-                <Router />
+                {user ? <Router /> : <RouterAuth />}
                 {isLoader && <Loader />}
                 {snackbarText && <Snackbar text={snackbarText} />}
             </div>
