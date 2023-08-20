@@ -43,7 +43,9 @@ function App() {
             <h1>ניהול כתבות</h1>
 
             <div className="frame">
-                {user ? <Router /> : <RouterAuth />}
+                <GeneralContext.Provider value={{ user, setUser, setIsLoader, snackbar }}>
+                    {user ? <Router /> : <RouterAuth />}
+                </GeneralContext.Provider>
                 {isLoader && <Loader />}
                 {snackbarText && <Snackbar text={snackbarText} />}
             </div>
