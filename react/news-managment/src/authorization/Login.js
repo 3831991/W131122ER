@@ -7,7 +7,7 @@ export default function Login() {
         password: '',
     });
 
-    const { setUser, snackbar, setIsLoading } = useContext(GeneralContext);
+    const { setUser, snackbar, setIsLoader } = useContext(GeneralContext);
 
     const handelInput = ev => {
         const { name, value } = ev.target;
@@ -22,14 +22,16 @@ export default function Login() {
         ev.preventDefault();
 
         if (!formData.userName) {
-            alert("חסר שם משתמש");
+            snackbar("חסר שם משתמש");
             return;
         }
 
         if (!formData.password) {
-            alert("למה שתצליחו להתחבר ללא סיסמה???????????");
+            snackbar("למה שתצליחו להתחבר ללא סיסמה???????????");
             return;
         }
+        
+        setIsLoader(true);
 
         fetch(`https://api.shipap.co.il/login`, {
             credentials: 'include',
@@ -47,12 +49,12 @@ export default function Login() {
             }
         })
         .then(data => {
-            
+            setUser(data);
         })
         .catch(err => {
-            alert(err.message);
+            snackbar(err.message);
         })
-        // .finally(() => );
+        .finally(() => setIsLoader(false));
     }
 
     return (

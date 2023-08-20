@@ -33,6 +33,7 @@ function App() {
             setUser(data);
         })
         .catch(err => {
+            setUser(null);
             console.log(err.message);
         })
         .finally(() => setIsLoader(false));
@@ -44,7 +45,7 @@ function App() {
 
             <div className="frame">
                 <GeneralContext.Provider value={{ user, setUser, setIsLoader, snackbar }}>
-                    {user ? <Router /> : <RouterAuth />}
+                    {user ? <Router /> : (user === null ? <RouterAuth /> : <p>טוען...</p>)}
                 </GeneralContext.Provider>
                 {isLoader && <Loader />}
                 {snackbarText && <Snackbar text={snackbarText} />}
