@@ -1,5 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
+import Router from './Router';
 
 function App() {
   return (
@@ -7,7 +7,7 @@ function App() {
       <h1>ניהול כתבות</h1>
 
       <div className="frame">
-
+        <Router />
       </div>
     </div>
   );
