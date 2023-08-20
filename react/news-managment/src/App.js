@@ -3,7 +3,7 @@ import './App.css';
 import { Router, RouterAuth } from './Router';
 import Loader from './components/Loader';
 import Snackbar from './components/Snackbar';
-import Logout from './authorization/Logut';
+import Logout from './authorization/Logout';
 
 export const GeneralContext = React.createContext();
 
