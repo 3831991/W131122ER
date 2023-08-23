@@ -46,8 +46,8 @@ export default function Articles() {
                                 <td>{moment(a.publishDate).format('DD/MM')}</td>
                                 <td>{a.views}</td>
                                 <td>
-                                    <button className="edit"><AiFillEdit /></button>
-                                    <button className="remove"><AiFillDelete /></button>
+                                    <button className="green"><AiFillEdit /></button>
+                                    <button className="red"><AiFillDelete /></button>
                                 </td>
                             </tr>
                         )
