@@ -1,12 +1,14 @@
 import { Link, useParams } from 'react-router-dom';
 import './Articles.css';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AiOutlineRight } from 'react-icons/ai';
 import moment from 'moment';
+import { GeneralContext } from '../App';
 
 export default function ArticlesEdit() {
     const { id } = useParams();
     const [item, setItem] = useState();
+    const { snackbar, setIsLoader } = useContext(GeneralContext);
 
     useEffect(() => {
         if (id === 'new') {
@@ -18,14 +20,14 @@ export default function ArticlesEdit() {
                 imgUrl: '',
             });
         } else {
-            setLoading(true);
+            setIsLoader(true);
 
             fetch(`https://api.shipap.co.il/articles/${id}`, {
                 credentials: 'include',
             })
             .then(res => res.json())
             .then(data => setItem(data))
-            .finally(() => setLoading(false));
+            .finally(() => setIsLoader(false));
         }
     }, [id]);
 
