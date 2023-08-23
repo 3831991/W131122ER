@@ -3,10 +3,12 @@ import { useContext, useEffect, useState } from 'react';
 import moment from 'moment';
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import './Articles.css';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Articles() {
     const [articles, setArticles] = useState([]);
     const { snackbar, setIsLoader } = useContext(GeneralContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         setIsLoader(true);
@@ -21,9 +23,26 @@ export default function Articles() {
         });
     }, []);
 
+    function remove(articleId) {
+        if (!window.confirm(`האם אתה בטוח כי ברצונך למחוק את כתבה ${articleId}?`)) {
+            return;
+        }
+
+        setIsLoader(true);
+
+        fetch(`https://api.shipap.co.il/articles/${articleId}`, {
+            credentials: 'include',
+            method: 'DELETE',
+        })
+        .then(() => {
+            setArticles(articles.filter(a => a.id != articleId));
+            setIsLoader(false);
+        });
+    }
+
     return (
         <>
-            <p>ניהול כתבות</p>
+            <button className='returnLink' onClick={() => navigate('/article/new')}>+ כתבה חדשה</button>
 
             <table>
                 <thead>
@@ -38,7 +57,7 @@ export default function Articles() {
                 </thead>
                 <tbody>
                     {
-                        articles.map((a, i) => 
+                        articles.map((a, i) =>
                             <tr key={a.id}>
                                 <td>{i + 1}</td>
                                 <td>{a.headline}</td>
@@ -46,8 +65,11 @@ export default function Articles() {
                                 <td>{moment(a.publishDate).format('DD/MM')}</td>
                                 <td>{a.views}</td>
                                 <td>
-                                    <button className="green"><AiFillEdit /></button>
-                                    <button className="red"><AiFillDelete /></button>
+                                    <Link to={`/article/${a.id}`}>
+                                        <button className="green"><AiFillEdit /></button>
+                                    </Link>
+                                    
+                                    <button className="red" onClick={() => remove(a.id)}><AiFillDelete /></button>
                                 </td>
                             </tr>
                         )
