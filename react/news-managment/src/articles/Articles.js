@@ -58,7 +58,7 @@ export default function Articles() {
                 <tbody>
                     {
                         articles.map((a, i) =>
-                            <tr key={a.id}>
+                            <tr key={a.id} onDoubleClick={() => navigate(`/article/${a.id}`)}>
                                 <td>{i + 1}</td>
                                 <td>{a.headline}</td>
                                 <td>{moment(a.addedTime).format('DD/MM/YY')}</td>
