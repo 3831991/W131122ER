@@ -18,7 +18,14 @@ export default function ArticlesEdit() {
                 imgUrl: '',
             });
         } else {
-            
+            setLoading(true);
+
+            fetch(`https://api.shipap.co.il/articles/${id}`, {
+                credentials: 'include',
+            })
+            .then(res => res.json())
+            .then(data => setItem(data))
+            .finally(() => setLoading(false));
         }
     }, [id]);
 
@@ -33,7 +40,9 @@ export default function ArticlesEdit() {
                 <>
                     <h2>{item.id ? 'עריכת' : 'הוספת'} כתבה</h2>
 
-                    
+                    <form>
+                        
+                    </form>
                 </>
             }
         </div>
