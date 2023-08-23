@@ -4,9 +4,9 @@ import './Articles.css';
 export default function ArticlesEdit() {
     const { id } = useParams(); 
 
-    
+
 
     return (
-        <p>עריכת כתבה</p>
+        <h3>עריכת כתבה {id}</h3>
     )
 }
