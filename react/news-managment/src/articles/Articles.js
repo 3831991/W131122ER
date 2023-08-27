@@ -2,6 +2,7 @@ import { GeneralContext } from '../App';
 import { useContext, useEffect, useState } from 'react';
 import moment from 'moment';
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { FaRecycle } from "react-icons/fa6";
 import './Articles.css';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -42,7 +43,10 @@ export default function Articles() {
 
     return (
         <>
-            <button className='returnLink' onClick={() => navigate('/article/new')}>+ כתבה חדשה</button>
+            <div className='btnFrame'>
+                <button className='returnLink' onClick={() => navigate('/article/new')}>+ כתבה חדשה</button>
+                <button className='returnLink' onClick={() => navigate('/recycle-bin')}><FaRecycle /> סל מחזור</button>
+            </div>
 
             <table>
                 <thead>

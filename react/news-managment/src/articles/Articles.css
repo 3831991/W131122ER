@@ -79,3 +79,8 @@ button.returnLink svg {
 .returnLink:hover a {
     text-decoration: underline;
 }
+
+.btnFrame {
+    display: flex;
+    justify-content: space-between;
+}
