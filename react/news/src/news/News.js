@@ -14,7 +14,7 @@ export default function News() {
     }, []);
 
     return (
-        <div>
+        <div className='News'>
             {articles.map(a => <Card key={a.id} article={a} />)}
         </div>
     )
