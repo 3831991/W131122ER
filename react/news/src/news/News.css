@@ -62,3 +62,20 @@
 .News header, .News footer {
     padding: 4px 8px;
 }
+
+.article {
+    max-width: 700px;
+    margin: auto;
+    background-color: white;
+    padding: 1px 0px;
+}
+
+.article h3 {
+    margin: 0;
+    padding: 10px;
+}
+
+.article p {
+    margin: 0;
+    padding: 14px 10px;
+}
