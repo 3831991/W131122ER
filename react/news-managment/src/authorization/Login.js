@@ -1,5 +1,6 @@
 import { useContext, useState } from "react"
 import { GeneralContext } from "../App";
+import { Link } from "react-router-dom";
 
 export default function Login() {
     const [formData, setFormData] = useState({
@@ -76,6 +77,10 @@ export default function Login() {
                     <button>התחבר</button>
                 </form>
             </div>
+            
+            <p className="signup">
+                <Link to="/signup">להרשמה לחץ כאן</Link>
+            </p>
         </>
     )
 }
