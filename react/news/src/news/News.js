@@ -1,3 +1,4 @@
+import Card from './Card';
 import './News.css';
 import { useState, useEffect } from 'react';
 
@@ -11,4 +12,10 @@ export default function News() {
             setArticles(data);
         });
     }, []);
+
+    return (
+        <div>
+            {articles.map(a => <Card key={a.id} article={a} />)}
+        </div>
+    )
 }
