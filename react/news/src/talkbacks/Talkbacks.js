@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import moment from 'moment';
 import './Talkbacks.css';
 
 export default function Talkbacks({ articleId }) {
@@ -13,6 +14,26 @@ export default function Talkbacks({ articleId }) {
     }, []);
 
     return (
-        <div>תגובות לכתבה {articleId}</div>
+        <div className='Talkbacks'>
+            <h3>תגובות</h3>
+            {
+                talkbacks.map((t, i) =>
+                    <div key={t.id}>
+                        <div className='talkbackContainer'>
+                            <div className='grid'>
+                                <div>
+                                    <div className='circle' style={{backgroundColor: 'hsl('+ t.id * 40 +' 48% 47%)'}}>
+                                        {t.name.slice(0,1)}
+                                    </div>
+                                </div>
+
+                                <div>{t.name} <i>({moment(t.time).format('DD/MM/Y H:mm')})</i></div>
+                                <div className='content'>{t.comment}</div>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
+        </div>
     )
 }
