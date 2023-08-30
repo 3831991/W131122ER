@@ -2,6 +2,7 @@ import './News.css';
 import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { GeneralContext } from '../App';
+import Talkbacks from '../talkbacks/Talkbacks';
 
 export default function NewsPage() {
     const [article, setArticle] = useState();
@@ -29,6 +30,7 @@ export default function NewsPage() {
                     <p>{article.description}</p>
                     <img src={article.imgUrl} width="100%" />
                     <p>{article.content}</p>
+                    <Talkbacks articleId={id} />
                 </div> :
                 <p className='article'>טוען...</p>
             }
