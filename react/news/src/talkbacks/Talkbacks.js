@@ -14,6 +14,11 @@ export default function Talkbacks({ articleId }) {
         });
     }, []);
 
+    const commentToggle = t => {
+        t.isShowComment = !t.isShowComment;
+        setTalkbacks([...talkbacks]);
+    }
+
     return (
         <div className='Talkbacks'>
             <h3>תגובות</h3>
@@ -31,10 +36,12 @@ export default function Talkbacks({ articleId }) {
 
                                 <div>{t.name} <i>({moment(t.time).format('DD/MM/Y H:mm')})</i></div>
                                 <div className='btnFrame'>
-                                    <button style={{backgroundColor: 'hsl('+ t.id * 40 +' 48% 47%)'}}>הגב</button>
+                                    <button style={{backgroundColor: 'hsl('+ t.id * 40 +' 48% 47%)'}} onClick={() => commentToggle(t)}>הגב</button>
                                 </div>
                                 <div className='content'>{t.comment}</div>
                             </div>
+
+                            {t.isShowComment && <TalkbacksForm articleId={articleId} />}
                         </div>
                     </div>
                 )
