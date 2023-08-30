@@ -3,15 +3,23 @@ import moment from 'moment';
 import './Talkbacks.css';
 import TalkbacksForm from './TalkbacksForm';
 
-export default function Talkbacks({ articleId }) {
+export default function Talkbacks({ articleId, children, level }) {
     const [talkbacks, setTalkbacks] = useState([]);
 
     useEffect(() => {
-        fetch(`https://api.shipap.co.il/articles/${articleId}/talkbacks?token=d2960d76-3431-11ee-b3e9-14dda9d4a5f0`)
-        .then(res => res.json())
-        .then(data => {
-            setTalkbacks(data);
-        });
+        if (children) {
+            setTalkbacks(children);
+        } else {
+            fetch(`https://api.shipap.co.il/articles/${articleId}/talkbacks?token=d2960d76-3431-11ee-b3e9-14dda9d4a5f0`)
+            .then(res => res.json())
+            .then(data => {
+                data.forEach(t => {
+                    t.children = data.filter(c => c.parent === t.id);
+                });
+    
+                setTalkbacks(data.filter(c => c.parent === 0));
+            });
+        }
     }, []);
 
     const commentToggle = t => {
@@ -21,11 +29,11 @@ export default function Talkbacks({ articleId }) {
 
     return (
         <div className='Talkbacks'>
-            <h3>תגובות</h3>
-            <TalkbacksForm articleId={articleId} added={item => setTalkbacks([item, ...talkbacks])} />
+            {!children && <h3>תגובות</h3>}
+            {!children && <TalkbacksForm articleId={articleId} added={item => setTalkbacks([item, ...talkbacks])} />}
             {
                 talkbacks.map((t, i) =>
-                    <div key={t.id}>
+                    <div key={t.id} style={{ paddingRight: (level || 0) * 20 }}>
                         <div className='talkbackContainer'>
                             <div className='grid'>
                                 <div>
@@ -41,8 +49,10 @@ export default function Talkbacks({ articleId }) {
                                 <div className='content'>{t.comment}</div>
                             </div>
 
-                            {t.isShowComment && <TalkbacksForm articleId={articleId} />}
+                            {t.isShowComment && <TalkbacksForm articleId={articleId} parentId={t.id} />}
                         </div>
+
+                        {t.children.length ? <Talkbacks articleId={articleId} children={t.children} level={(level || 0) + 1} /> : ''}
                     </div>
                 )
             }

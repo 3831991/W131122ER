@@ -1,12 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { GeneralContext } from '../App';
 
-export default function TalkbacksForm({ articleId, added }) {
+export default function TalkbacksForm({ articleId, added, parentId }) {
     const [formData, setFormData] = useState({
         name: '',
         comment: '',
-        parent: 0,
-        articleId,
     });
 
     const { snackbar, setIsLoader } = useContext(GeneralContext);
@@ -18,7 +16,11 @@ export default function TalkbacksForm({ articleId, added }) {
         fetch(`https://api.shipap.co.il/articles/${articleId}/talkbacks?token=d2960d76-3431-11ee-b3e9-14dda9d4a5f0`, {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
-            body: JSON.stringify(formData),
+            body: JSON.stringify({
+                ...formData,
+                articleId,
+                parent: parentId || 0,
+            }),
         })
         .then(res => res.json())
         .then(data => {
@@ -29,8 +31,6 @@ export default function TalkbacksForm({ articleId, added }) {
             setFormData({
                 name: '',
                 comment: '',
-                parent: 0,
-                articleId,
             });
         });
     }
