@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import moment from 'moment';
 import './Talkbacks.css';
+import TalkbacksForm from './TalkbacksForm';
 
 export default function Talkbacks({ articleId }) {
     const [talkbacks, setTalkbacks] = useState([]);
@@ -16,6 +17,7 @@ export default function Talkbacks({ articleId }) {
     return (
         <div className='Talkbacks'>
             <h3>תגובות</h3>
+            <TalkbacksForm articleId={articleId} />
             {
                 talkbacks.map((t, i) =>
                     <div key={t.id}>
