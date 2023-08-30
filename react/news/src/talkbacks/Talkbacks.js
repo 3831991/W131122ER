@@ -52,7 +52,7 @@ export default function Talkbacks({ articleId, children, level }) {
                             {t.isShowComment && <TalkbacksForm articleId={articleId} parentId={t.id} />}
                         </div>
 
-                        {t.children.length ? <Talkbacks articleId={articleId} children={t.children} level={(level || 0) + 1} /> : ''}
+                        {t.children?.length ? <Talkbacks articleId={articleId} children={t.children} level={(level || 0) + 1} /> : ''}
                     </div>
                 )
             }
