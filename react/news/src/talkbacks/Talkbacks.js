@@ -17,7 +17,7 @@ export default function Talkbacks({ articleId }) {
     return (
         <div className='Talkbacks'>
             <h3>תגובות</h3>
-            <TalkbacksForm articleId={articleId} />
+            <TalkbacksForm articleId={articleId} added={item => setTalkbacks([item, ...talkbacks])} />
             {
                 talkbacks.map((t, i) =>
                     <div key={t.id}>
