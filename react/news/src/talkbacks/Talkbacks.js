@@ -27,6 +27,12 @@ export default function Talkbacks({ articleId, children, level }) {
         setTalkbacks([...talkbacks]);
     }
 
+    function addChild(item, parent) {
+        parent.children.unshift(item);
+        parent.isShowComment = false;
+        setTalkbacks([...talkbacks]);
+    }
+
     return (
         <div className='Talkbacks'>
             {!children && <h3>תגובות</h3>}
@@ -49,7 +55,7 @@ export default function Talkbacks({ articleId, children, level }) {
                                 <div className='content'>{t.comment}</div>
                             </div>
 
-                            {t.isShowComment && <TalkbacksForm articleId={articleId} parentId={t.id} added={item => {}} />}
+                            {t.isShowComment && <TalkbacksForm articleId={articleId} parentId={t.id} added={item => addChild(item, t)} />}
                         </div>
 
                         {t.children?.length ? <Talkbacks articleId={articleId} children={t.children} level={(level || 0) + 1} /> : ''}

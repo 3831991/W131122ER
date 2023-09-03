@@ -24,6 +24,7 @@ export default function TalkbacksForm({ articleId, added, parentId }) {
         })
         .then(res => res.json())
         .then(data => {
+            data.children = [];
             added(data);
             setIsLoader(false);
             snackbar("התגובה נוספה בהצלחה");
