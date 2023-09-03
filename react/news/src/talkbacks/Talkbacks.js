@@ -39,7 +39,7 @@ export default function Talkbacks({ articleId, children, level }) {
             {!children && <TalkbacksForm articleId={articleId} added={item => setTalkbacks([item, ...talkbacks])} />}
             {
                 talkbacks.map((t, i) =>
-                    <div key={t.id} style={{ paddingRight: (level || 0) * 20 }}>
+                    <div key={t.id} style={{ paddingRight: level ? 20 : 0 }}>
                         <div className='talkbackContainer'>
                             <div className='grid'>
                                 <div>
