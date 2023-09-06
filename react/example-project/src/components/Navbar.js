@@ -21,6 +21,10 @@ export const RoleTypes = {
     admin: 3,
 };
 
+export const checkPermissions = (permissions, userRoleType) => {
+    return permissions.includes(userRoleType);
+}
+
 const pages = [
     { route: '/about', title: 'About' },
     { route: '/login', title: 'Login', permissions: [RoleTypes.none] },
@@ -131,8 +135,8 @@ export default function Navbar() {
                         LOGO
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map(p => (
-                            <Link key={p.route} to={p.route} style={{ textDecoration: 'none', color: 'black' }}>
+                        {pages.filter(p => !p.permissions || checkPermissions(p.permissions, 0)).map(p => (
+                            <Link key={p.route} to={p.route} style={{ textDecoration: 'none', color: 'white' }}>
                                 <Button
                                     onClick={handleCloseNavMenu}
                                     sx={{ my: 2, color: 'white', display: 'block' }}
