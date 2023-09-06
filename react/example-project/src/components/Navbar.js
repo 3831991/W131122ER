@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useContext } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,6 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
+import { GeneralContext } from '../App';
 
 export const RoleTypes = {
     none: 0,
@@ -36,8 +37,9 @@ const pages = [
 const settings = ['Profile', 'Logout'];
 
 export default function Navbar() {
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [anchorElNav, setAnchorElNav] = useState(null);
+    const [anchorElUser, setAnchorElUser] = useState(null);
+    const { user, setUser, setLoader, userRoleType, setUserRoleType } = useContext(GeneralContext);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -74,7 +76,7 @@ export default function Navbar() {
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        MyCards
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -106,7 +108,7 @@ export default function Navbar() {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {pages.map(p => (
+                            {pages.filter(p => !p.permissions || checkPermissions(p.permissions, userRoleType)).map(p => (
                                 <Link key={p.route} to={p.route} style={{ textDecoration: 'none', color: 'black' }}>
                                     <MenuItem onClick={handleCloseNavMenu}>
                                         <Typography textAlign="center">{p.title}</Typography>
@@ -132,10 +134,10 @@ export default function Navbar() {
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        <b>MyCards</b>
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.filter(p => !p.permissions || checkPermissions(p.permissions, 0)).map(p => (
+                        {pages.filter(p => !p.permissions || checkPermissions(p.permissions, userRoleType)).map(p => (
                             <Link key={p.route} to={p.route} style={{ textDecoration: 'none', color: 'white' }}>
                                 <Button
                                     onClick={handleCloseNavMenu}
