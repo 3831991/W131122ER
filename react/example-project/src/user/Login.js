@@ -18,7 +18,31 @@ export default function Login() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        
+    
+        fetch(`https://api.shipap.co.il/clients/login?token=d2960d76-3431-11ee-b3e9-14dda9d4a5f0`, {
+            credentials: 'include',
+            method: 'POST',
+            headers: { 'Content-type': 'application/json' },
+            body: JSON.stringify({
+                email: data.get('email'),
+                password: data.get('password'),
+            }),
+        })
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                return res.text().then(x => {
+                    throw new Error(x);
+                });
+            }
+        })
+        .then(data => {
+
+        })
+        .catch(err => {
+            console.log(err.message);
+        });
     };
 
     return (
