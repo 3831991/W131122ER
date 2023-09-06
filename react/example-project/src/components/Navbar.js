@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { GeneralContext } from '../App';
 
 export const RoleTypes = {
@@ -34,12 +34,16 @@ const pages = [
     { route: '/my-cards', title: 'My cards', permissions: [RoleTypes.business, RoleTypes.admin] },
     { route: '/admin', title: 'User management', permissions: [RoleTypes.admin] },
 ];
-const settings = ['Profile', 'Logout'];
+
+const settings = [
+    { route: '/account', title: 'Account', permissions: [RoleTypes.user, RoleTypes.business, RoleTypes.admin] },
+];
 
 export default function Navbar() {
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
     const { user, setUser, setLoader, userRoleType, setUserRoleType } = useContext(GeneralContext);
+    const navigate = useNavigate();
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -55,6 +59,22 @@ export default function Navbar() {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const logout = () => {
+        setLoader(true);
+
+        fetch(`https://api.shipap.co.il/clients/logout`, {
+            credentials: 'include',
+        })
+            .then(() => {
+                setUser();
+                setUserRoleType(RoleTypes.none);
+                setLoader(false);
+                navigate('/');
+            });
+
+        handleCloseUserMenu();
+    }
 
     return (
         <AppBar position="static">
@@ -149,35 +169,45 @@ export default function Navbar() {
                         ))}
                     </Box>
 
-                    <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{ mt: '45px' }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
+                    {
+                        user ?
+                        <Box sx={{ flexGrow: 0 }}>
+                            <Tooltip title="Open settings">
+                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                </IconButton>
+                            </Tooltip>
+                            <Menu
+                                sx={{ mt: '45px' }}
+                                id="menu-appbar"
+                                anchorEl={anchorElUser}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={Boolean(anchorElUser)}
+                                onClose={handleCloseUserMenu}
+                            >
+                                {settings.filter(s => !s.permissions || checkPermissions(s.permissions, userRoleType)).map(s => (
+                                    <Link key={s.route} to={s.route} style={{ textDecoration: 'none', color: 'black' }}>
+                                        <MenuItem onClick={handleCloseUserMenu}>
+                                            <Typography textAlign="center">{s.title}</Typography>
+                                        </MenuItem>
+                                    </Link>
+                                ))}
+
+                                <MenuItem onClick={logout}>
+                                    <Typography textAlign="center">Logout</Typography>
                                 </MenuItem>
-                            ))}
-                        </Menu>
-                    </Box>
+                            </Menu>
+                        </Box> : 
+                        ''
+                    }
                 </Toolbar>
             </Container>
         </AppBar>
