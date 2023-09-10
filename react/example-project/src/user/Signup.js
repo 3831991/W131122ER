@@ -11,7 +11,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { GeneralContext } from '../App';
-import { RoleTypes } from '../components/Navbar';
 import Switch from '@mui/material/Switch';
 import { FormControlLabel } from '@mui/material';
 
@@ -19,7 +18,7 @@ const defaultTheme = createTheme();
 
 export default function Signup() {
     const navigate = useNavigate();
-    const { setUser, setLoader, setUserRoleType } = useContext(GeneralContext);
+    const { setLoader } = useContext(GeneralContext);
 
     const structure = [
         { name: 'firstName', type: 'text', label: 'First Name', required: true, block: false },
