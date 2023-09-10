@@ -35,10 +35,6 @@ const pages = [
     { route: '/admin', title: 'User management', permissions: [RoleTypes.admin] },
 ];
 
-const settings = [
-    { route: '/account', title: 'Account', permissions: [RoleTypes.user, RoleTypes.business, RoleTypes.admin] },
-];
-
 export default function Navbar() {
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
@@ -174,7 +170,7 @@ export default function Navbar() {
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                    <Avatar alt={user.fullName} src="/static/images/avatar/2.jpg" />
                                 </IconButton>
                             </Tooltip>
                             <Menu
@@ -193,13 +189,11 @@ export default function Navbar() {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                {settings.filter(s => !s.permissions || checkPermissions(s.permissions, userRoleType)).map(s => (
-                                    <Link key={s.route} to={s.route} style={{ textDecoration: 'none', color: 'black' }}>
-                                        <MenuItem onClick={handleCloseUserMenu}>
-                                            <Typography textAlign="center">{s.title}</Typography>
-                                        </MenuItem>
-                                    </Link>
-                                ))}
+                                <Link to="/account" style={{ textDecoration: 'none', color: 'black' }}>
+                                    <MenuItem onClick={handleCloseUserMenu}>
+                                        <Typography textAlign="center">{user.fullName}</Typography>
+                                    </MenuItem>
+                                </Link>
 
                                 <MenuItem onClick={logout}>
                                     <Typography textAlign="center">Logout</Typography>
