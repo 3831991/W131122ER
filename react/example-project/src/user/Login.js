@@ -22,6 +22,7 @@ export default function Login() {
         password: '',
     });
     const [errors, setErrors] = useState({});
+    const [isFormValid, setIsFormValid] = useState(false);
     const navigate = useNavigate();
     const { setUser, setLoader, setUserRoleType } = useContext(GeneralContext);
 
@@ -46,7 +47,8 @@ export default function Login() {
                 tempErrors[name] = item.message;
             }
         }
-      
+
+        setIsFormValid(!validate.error);
         setErrors(tempErrors);
     }
 
@@ -140,6 +142,7 @@ export default function Login() {
                             type="submit"
                             fullWidth
                             variant="contained"
+                            disabled={!isFormValid}
                             sx={{ mt: 3, mb: 2 }}
                         >
                             Login
