@@ -28,7 +28,13 @@ export default function Login() {
 
     const schema = Joi.object({
         email: Joi.string().email({ tlds: false }).required(),
-        password: Joi.string().pattern(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@%$#^&*\-_*]).{8,32}$/).required(),
+        password: Joi.string()
+                     .pattern(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@%$#^&*\-_*]).{8,32}$/)
+                     .required()
+                     .messages({
+                        "string.pattern.base": "Password must meet the specified criteria",
+                        "any.required": "Password is required",
+                      }),
     });
 
     const handelChange = ev => {
