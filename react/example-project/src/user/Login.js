@@ -9,15 +9,47 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { GeneralContext } from '../App';
 import { RoleTypes } from '../components/Navbar';
+import Joi from 'joi';
 
 const defaultTheme = createTheme();
 
 export default function Login() {
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+    });
+    const [errors, setErrors] = useState({});
     const navigate = useNavigate();
     const { setUser, setLoader, setUserRoleType } = useContext(GeneralContext);
+
+    const schema = Joi.object({
+        email: Joi.string().email({ tlds: false }).required(),
+        password: Joi.string().pattern(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@%$#^&*\-_*]).{8,32}$/).required(),
+    });
+
+    const handelChange = ev => {
+        const { name, value } = ev.target;
+        const obj = { ...formData, [name]: value };
+        setFormData(obj);
+
+        const validate = schema.validate(obj, { abortEarly: false });
+        const errors = {};
+
+        if (validate.error) {
+            validate.error.details.forEach(e => {
+                const key = e.context.key;
+                const err = e.message;
+
+                errors[key] = err;
+            });
+        }
+      
+        console.log(errors);
+        setErrors(errors);
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -78,6 +110,8 @@ export default function Login() {
                     <Typography component="h1" variant="h5">Login</Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField
+                            error={errors.email}
+                            helperText={errors.email}
                             margin="normal"
                             required
                             fullWidth
@@ -86,8 +120,12 @@ export default function Login() {
                             name="email"
                             autoComplete="email"
                             autoFocus
+                            onChange={handelChange}
+                            value={formData.email}
                         />
                         <TextField
+                            error={errors.password}
+                            helperText={errors.password}
                             margin="normal"
                             required
                             fullWidth
@@ -96,6 +134,8 @@ export default function Login() {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            onChange={handelChange}
+                            value={formData.password}
                         />
                         <Button
                             type="submit"
