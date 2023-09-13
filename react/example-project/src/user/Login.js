@@ -36,19 +36,18 @@ export default function Login() {
         setFormData(obj);
 
         const validate = schema.validate(obj, { abortEarly: false });
-        const errors = {};
+        const tempErrors = { ...errors };
+        delete tempErrors[name];
 
         if (validate.error) {
-            validate.error.details.forEach(e => {
-                const key = e.context.key;
-                const err = e.message;
+            const item = validate.error.details.find(e => e.context.key == name);
 
-                errors[key] = err;
-            });
+            if (item) {
+                tempErrors[name] = item.message;
+            }
         }
       
-        console.log(errors);
-        setErrors(errors);
+        setErrors(tempErrors);
     }
 
     const handleSubmit = (event) => {
@@ -110,7 +109,7 @@ export default function Login() {
                     <Typography component="h1" variant="h5">Login</Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField
-                            error={errors.email}
+                            error={Boolean(errors.email)}
                             helperText={errors.email}
                             margin="normal"
                             required
@@ -124,7 +123,7 @@ export default function Login() {
                             value={formData.email}
                         />
                         <TextField
-                            error={errors.password}
+                            error={Boolean(errors.password)}
                             helperText={errors.password}
                             margin="normal"
                             required
