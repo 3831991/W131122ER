@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useResolvedPath } from 'react-router-dom';
 import { GeneralContext } from '../App';
 
 export const RoleTypes = {
@@ -40,6 +40,7 @@ export default function Navbar() {
     const [anchorElUser, setAnchorElUser] = useState(null);
     const { user, setUser, setLoader, userRoleType, setUserRoleType } = useContext(GeneralContext);
     const navigate = useNavigate();
+    const path = useResolvedPath().pathname;
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -94,7 +95,6 @@ export default function Navbar() {
                     >
                         MyCards
                     </Typography>
-
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
@@ -109,20 +109,12 @@ export default function Navbar() {
                         <Menu
                             id="menu-appbar"
                             anchorEl={anchorElNav}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
-                            }}
+                            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
                             keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
+                            transformOrigin={{ vertical: 'top', horizontal: 'left' }}
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
-                            sx={{
-                                display: { xs: 'block', md: 'none' },
-                            }}
+                            sx={{ display: { xs: 'block', md: 'none' }, }}
                         >
                             {pages.filter(p => !p.permissions || checkPermissions(p.permissions, userRoleType)).map(p => (
                                 <Link key={p.route} to={p.route} style={{ textDecoration: 'none', color: 'black' }}>
@@ -157,14 +149,18 @@ export default function Navbar() {
                             <Link key={p.route} to={p.route} style={{ textDecoration: 'none', color: 'white' }}>
                                 <Button
                                     onClick={handleCloseNavMenu}
-                                    sx={{ my: 2, color: 'white', display: 'block' }}
+                                    sx={{
+                                        my: 2,
+                                        color: 'white',
+                                        display: 'block',
+                                        backgroundColor: p.route === path ? 'cornflowerblue' : ''
+                                    }}
                                 >
                                     {p.title}
                                 </Button>
                             </Link>
                         ))}
                     </Box>
-
                     {
                         user ?
                         <Box sx={{ flexGrow: 0 }}>
