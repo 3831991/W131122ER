@@ -29,9 +29,37 @@ app.get('/', (req, res) => {
 app.get('/users', (req, res) => {
     con.query("SELECT * FROM `users`", (err, result) => {
         if (err) {
-            return res.status(500).send("Yesh takala...");
+            return res.status(500).send("Error...");
         }
 
         res.send(result);
-    })
-})
+    });
+});
+
+app.get('/users/limit', (req, res) => {
+    if (!req.query.start) {
+        return res.status(403).send("limit start is required");
+    }
+
+    if (!req.query.quantity) {
+        return res.status(403).send("limit quantity is required");
+    }
+
+    con.query("SELECT * FROM `users` LIMIT ?, ?", [+req.query.start, +req.query.quantity], (err, result) => {
+        if (err) {
+            return res.status(500).send("Error...");
+        }
+
+        res.send(result);
+    });
+});
+
+app.get('/users/:id', (req, res) => {
+    con.query("SELECT * FROM `users` WHERE `id` = ?", [req.params.id], (err, result) => {
+        if (err) {
+            return res.status(500).send("Error...");
+        }
+
+        res.send(result.pop());
+    });
+});
