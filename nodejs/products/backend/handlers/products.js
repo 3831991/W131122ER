@@ -12,6 +12,14 @@ module.exports = (app) => {
         });
     });
 
-
+    app.delete('/products/:id', (req, res) => {
+        con.query("DELETE FROM `products` WHERE `id` = ?", [req.params.id], (err, result) => {
+            if (err) {
+                res.status(500).send("Couldn't delete product");
+            }
+        
+            res.send();
+        });
+    });
 
 }

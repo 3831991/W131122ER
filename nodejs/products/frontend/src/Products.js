@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
+import { AiFillDelete } from "react-icons/ai";
+// import { FaRecycle } from "react-icons/fa6";
+// import { Link, useNavigate } from 'react-router-dom';
 
 export default function Products() {
     const [products, setProducts] = useState([]);
@@ -11,6 +14,20 @@ export default function Products() {
         .catch(err => console.error(err));
     }, []);
 
+    const remove = (id) => {
+        if (!window.confirm("Are you sure you want to delete this product?")) {
+            return;
+        }
+
+        fetch(`http://localhost:4000/products/${id}`, {
+            method: 'DELETE',
+        })
+        .then(() => {
+            const newData = products.filter(x => x.id !== id);
+            setProducts(newData);
+        });
+    }
+
     return (
         <div>
             <table>
@@ -21,6 +38,7 @@ export default function Products() {
                         <th>Name</th>
                         <th>Price</th>
                         <th>Discount</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,6 +50,13 @@ export default function Products() {
                                 <td>{a.name}</td>
                                 <td>{a.price}</td>
                                 <td>{a.discount}</td>
+                                <td>
+                                    {/* <Link to={`/product/${a.id}`}>
+                                        <button className="green"><AiFillEdit /></button>
+                                    </Link> */}
+                                    
+                                    <button className="red" onClick={() => remove(a.id)}><AiFillDelete /></button>
+                                </td>
                             </tr>
                         )
                     }
