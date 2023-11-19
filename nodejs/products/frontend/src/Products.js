@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
-import { AiFillDelete } from "react-icons/ai";
-// import { FaRecycle } from "react-icons/fa6";
-// import { Link, useNavigate } from 'react-router-dom';
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { FaRecycle } from "react-icons/fa6";
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Products() {
     const [products, setProducts] = useState([]);
@@ -51,9 +51,9 @@ export default function Products() {
                                 <td>{a.price}</td>
                                 <td>{a.discount}</td>
                                 <td>
-                                    {/* <Link to={`/product/${a.id}`}>
+                                    <Link to={`/product/${a.id}`}>
                                         <button className="green"><AiFillEdit /></button>
-                                    </Link> */}
+                                    </Link>
                                     
                                     <button className="red" onClick={() => remove(a.id)}><AiFillDelete /></button>
                                 </td>
