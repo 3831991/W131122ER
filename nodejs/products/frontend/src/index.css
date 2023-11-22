@@ -278,3 +278,9 @@ button.logout:active {
     transform: translateY(100px);
   }
 }
+
+p.errMessage {
+  color: darkred;
+  font-size: 2em;
+  text-align: center;
+}

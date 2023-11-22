@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 export default function ProductEdit() {
     const [product, setProduct] = useState();
     const { id } = useParams();
+    const [errMessage, setErrMessage] = useState('');
 
     useEffect(() => {
         if (id === 'new') {
@@ -14,9 +15,17 @@ export default function ProductEdit() {
             });
         } else {
             fetch(`http://localhost:4000/products/${id}`)
-            .then(res => res.json())
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                } else {
+                    return res.text().then(x => {
+                        throw new Error(x);
+                    });
+                }
+            })
             .then(data => setProduct(data))
-            .catch(err => console.error(err));
+            .catch(err => setErrMessage(err.message));
         }
     }, [id]);
 
@@ -55,7 +64,7 @@ export default function ProductEdit() {
                         <button>{id === 'new' ? 'Add' : 'Save'}</button>
                     </form>
                 </div>
-                : ''
+                : errMessage ? <p className='errMessage'>{errMessage}!</p> : ''
             }
         </>
         
