@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
-import { FaRecycle } from "react-icons/fa6";
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function Products() {
     const [products, setProducts] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch("http://localhost:4000/products")
@@ -30,10 +30,14 @@ export default function Products() {
 
     return (
         <div>
+            <div className='btnFrame'>
+                <button className='returnLink' onClick={() => navigate('/product/new')}>Add product</button>
+            </div>
+
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>#</th>
                         <th>Created Time</th>
                         <th>Name</th>
                         <th>Price</th>

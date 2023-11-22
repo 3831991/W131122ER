@@ -12,6 +12,16 @@ module.exports = (app) => {
         });
     });
 
+    app.get('/products/:id', (req, res) => {
+        con.query("SELECT * FROM `products` WHERE `id` = ?", [req.params.id], (err, result) => {
+            if (err) {
+                throw err;
+            }
+        
+            res.send(result.pop());
+        });
+    });
+
     app.delete('/products/:id', (req, res) => {
         con.query("DELETE FROM `products` WHERE `id` = ?", [req.params.id], (err, result) => {
             if (err) {
