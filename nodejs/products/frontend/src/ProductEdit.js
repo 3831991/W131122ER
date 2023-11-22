@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react'
+import { useParams, useNavigate } from 'react-router-dom';
 
 export default function ProductEdit() {
     const [product, setProduct] = useState();
     const { id } = useParams();
     const [errMessage, setErrMessage] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (id === 'new') {
@@ -29,13 +30,33 @@ export default function ProductEdit() {
         }
     }, [id]);
 
-    const handelInput = (ev) => {
+    const handelInput = ev => {
         const { name, value } = ev.target;
 
         setProduct({
             ...product,
             [name]: value,
         });
+    }
+
+    const save = ev => {
+        ev.preventDefault();
+
+        if (product.id) {
+            fetch(`http://localhost:4000/products/${product.id}`, {
+                method: 'PUT',
+                headers: {'Content-type': 'application/json'},
+                body: JSON.stringify(product),
+            })
+            .then(() => navigate('/'));
+        } else {
+            fetch(`http://localhost:4000/products`, {
+                method: 'POST',
+                headers: {'Content-type': 'application/json'},
+                body: JSON.stringify(product),
+            })
+            .then(() => navigate('/'));
+        }
     }
 
     return (
@@ -45,7 +66,7 @@ export default function ProductEdit() {
                 <div className='smallFrame'>
                     <h2>{id === 'new' ? 'Add' : 'Edit'} product</h2>
 
-                    <form>
+                    <form onSubmit={save}>
                         <label>
                             Product name:
                             <input type="text" name='name' value={product.name} onChange={handelInput} />
