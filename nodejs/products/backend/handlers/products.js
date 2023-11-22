@@ -26,6 +26,30 @@ module.exports = (app) => {
         });
     });
 
+    app.post('/products', (req, res) => {
+        const { name, price, discount } = req.body;
+
+        con.query("INSERT INTO `products`(`name`, `price`, `discount`) VALUES (?, ?, ?)", [name, price, discount], (err, result) => {
+            if (err) {
+                throw err;
+            }
+
+            const id = result.insertId;
+
+            con.query("SELECT * FROM `products` WHERE `id` = ?", [id], (err, result) => {
+                if (err) {
+                    throw err;
+                }
+    
+                res.send(result.pop());
+            });
+        });
+    });
+
+    app.put('/products/:id', (req, res) => {
+
+    });
+
     app.delete('/products/:id', (req, res) => {
         con.query("DELETE FROM `products` WHERE `id` = ?", [req.params.id], (err, result) => {
             if (err) {
