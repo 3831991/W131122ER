@@ -17,6 +17,10 @@ module.exports = (app) => {
             if (err) {
                 throw err;
             }
+
+            if (!result.length) {
+                return res.status(403).send("Product not found");
+            }
         
             res.send(result.pop());
         });
