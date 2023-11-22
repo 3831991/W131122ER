@@ -47,7 +47,15 @@ module.exports = (app) => {
     });
 
     app.put('/products/:id', (req, res) => {
+        const { name, price, discount } = req.body;
 
+        con.query("UPDATE `products` SET `name` = ?, `price` = ?, `discount` = ? WHERE `id` = ?", [name, price, discount, req.params.id], (err, result) => {
+            if (err) {
+                throw err;
+            }
+
+            res.send();
+        });
     });
 
     app.delete('/products/:id', (req, res) => {
