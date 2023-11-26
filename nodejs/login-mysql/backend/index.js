@@ -23,6 +23,6 @@ app.get('/', (req, res) => {
     });
 });
 
-require('./handlers/login');
+require('./handlers/login')(app);
 require('./handlers/signup')(app);
 require('./handlers/logout');

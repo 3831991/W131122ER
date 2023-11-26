@@ -19,6 +19,20 @@ export default function Login() {
     const login = ev => {
         ev.preventDefault();
 
+        fetch("http://localhost:4000/login", {
+            method: "POST",
+            body: JSON.stringify(formData),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then(res => {
+            if (res.ok) {
+                console.log("Success")
+            } else {
+                console.log("Error: ")
+            }
+        })
     }
 
     return (
