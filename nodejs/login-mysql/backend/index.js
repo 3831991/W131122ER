@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+require('./sqlConnection');
 
 const app = express();
 
@@ -21,3 +22,7 @@ app.get('/', (req, res) => {
         message: 'Hello world!',
     });
 });
+
+require('./handlers/login');
+require('./handlers/signup')(app);
+require('./handlers/logout');
