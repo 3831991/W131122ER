@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Login() {
     const [formData, setFormData] = useState({
-        userName: '',
+        email: '',
         password: '',
     });
 
@@ -28,8 +28,8 @@ export default function Login() {
 
                 <form onSubmit={login}>
                     <label>
-                        שם משתמש:
-                        <input type="text" name="userName" value={formData.userName} onChange={handelInput} />
+                        אימייל:
+                        <input type="email" name="email" value={formData.userName} onChange={handelInput} />
                     </label>
 
                     <label>
