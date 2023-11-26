@@ -28,6 +28,7 @@ export default function Signup() {
             headers: {
                 "Content-Type": "application/json",
             },
+            credentials: 'include',
         })
         .then(res => {
             if (res.ok) {

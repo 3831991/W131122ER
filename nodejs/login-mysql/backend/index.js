@@ -1,10 +1,18 @@
 const express = require('express');
 const cors = require('cors');
+const session = require('express-session');
 require('./sqlConnection');
 
 const app = express();
 
 app.use(express.json());
+
+app.use(session({
+    secret: 'my-secret',
+    name: 'mySession',
+    resave: false,
+    saveUninitialized: true,
+}));
 
 app.use(cors({
     origin: true,
@@ -25,4 +33,4 @@ app.get('/', (req, res) => {
 
 require('./handlers/login')(app);
 require('./handlers/signup')(app);
-require('./handlers/logout');
+require('./handlers/logout')(app);
