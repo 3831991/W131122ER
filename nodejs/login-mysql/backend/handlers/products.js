@@ -1,4 +1,5 @@
 const con = require('../sqlConnection');
+const guard = require('../guard');
 
 module.exports = (app) => {
 
@@ -12,7 +13,7 @@ module.exports = (app) => {
         });
     });
 
-    app.get('/products/:id', (req, res) => {
+    app.get('/products/:id', guard, (req, res) => {
         con.query("SELECT * FROM `products` WHERE `id` = ?", [req.params.id], (err, result) => {
             if (err) {
                 throw err;
@@ -26,7 +27,7 @@ module.exports = (app) => {
         });
     });
 
-    app.post('/products', (req, res) => {
+    app.post('/products', guard, (req, res) => {
         const { name, price, discount } = req.body;
 
         con.query("INSERT INTO `products`(`name`, `price`, `discount`) VALUES (?, ?, ?)", [name, price, discount], (err, result) => {
@@ -46,7 +47,7 @@ module.exports = (app) => {
         });
     });
 
-    app.put('/products/:id', (req, res) => {
+    app.put('/products/:id', guard, (req, res) => {
         const { name, price, discount } = req.body;
 
         con.query("UPDATE `products` SET `name` = ?, `price` = ?, `discount` = ? WHERE `id` = ?", [name, price, discount, req.params.id], (err, result) => {
@@ -58,7 +59,7 @@ module.exports = (app) => {
         });
     });
 
-    app.delete('/products/:id', (req, res) => {
+    app.delete('/products/:id', guard, (req, res) => {
         con.query("DELETE FROM `products` WHERE `id` = ?", [req.params.id], (err, result) => {
             if (err) {
                 res.status(500).send("Couldn't delete product");
