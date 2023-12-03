@@ -1,7 +1,10 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Link } from "react-router-dom";
+import { GeneralContext } from "../App";
 
 export default function Login() {
+    const { user, setUser } = useContext(GeneralContext);
+
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -29,11 +32,15 @@ export default function Login() {
         })
         .then(res => {
             if (res.ok) {
-                console.log("Success")
+                return res.json();
             } else {
-                console.log("Error: ")
+                return res.json().then(x => {
+                    throw new Error(x.message);
+                });
             }
         })
+        .then(data => setUser(data))
+        .catch(err => console.log(err));
     }
 
     return (
