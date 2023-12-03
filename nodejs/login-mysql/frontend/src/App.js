@@ -3,10 +3,12 @@ import './App.css';
 import { Router, RouterAuth } from './Router';
 import Navbar from './components/Navbar';
 import Logout from './authorization/Logout';
+import { useNavigate } from 'react-router-dom';
 
 export const GeneralContext = createContext();
 
 function App() {
+    const navigate = useNavigate();
     const [user, setUser] = useState();
 
     useEffect(() => {
@@ -23,7 +25,10 @@ function App() {
             }
         })
         .then(data => setUser(data))
-        .catch(err => console.log(err));
+        .catch(err => {
+            navigate('/');
+            console.log(err);
+        });
     }, []);
 
     return (
