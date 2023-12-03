@@ -29,7 +29,7 @@ function App() {
             navigate('/');
             console.log(err);
         });
-    }, []);
+    }, [navigate]);
 
     return (
         <GeneralContext.Provider value={{ user, setUser }}>

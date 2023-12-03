@@ -15,7 +15,7 @@ function Navbar() {
             <ul>
                 {
                     navbar.map(n => 
-                        <li className={loc.pathname === n.path ? 'active' : '' }>
+                        <li key={n.path} className={loc.pathname === n.path ? 'active' : '' }>
                             <Link to={n.path}>{n.title}</Link>
                         </li>
                     )

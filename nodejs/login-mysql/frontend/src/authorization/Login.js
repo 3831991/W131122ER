@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { GeneralContext } from "../App";
 
 export default function Login() {
-    const { user, setUser } = useContext(GeneralContext);
+    const { setUser } = useContext(GeneralContext);
 
     const [formData, setFormData] = useState({
         email: '',
