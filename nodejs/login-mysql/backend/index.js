@@ -35,3 +35,4 @@ require('./handlers/login')(app);
 require('./handlers/signup')(app);
 require('./handlers/logout')(app);
 require('./handlers/products')(app);
+require('./handlers/dashboard')(app);
