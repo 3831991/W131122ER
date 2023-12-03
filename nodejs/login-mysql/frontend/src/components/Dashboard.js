@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import './Dashboard.css';
 
 export default function Dashboard() {
-    const structure = [
-        { name: '', title: 'כמות מוצרים' },
-        { name: '', title: 'ממוצע מחירים' },
-        { name: '', title: 'מחיר מקסימלי' },
-        { name: '', title: 'מחיר מינימלי' },
-    ];
+    const [structure, setStructure] = useState([
+        { name: 'amount', title: 'כמות מוצרים' },
+        { name: 'avg', title: 'ממוצע מחירים' },
+        { name: 'min', title: 'מחיר מקסימלי' },
+        { name: 'max', title: 'מחיר מינימלי' },
+    ]);
 
     useEffect(() => {
         const url = 'http://localhost:4000/dashboard';
@@ -21,17 +22,21 @@ export default function Dashboard() {
             fetch(`${url}/products/max`, params).then(res => res.text()),
         ])
         .then(data => {
-            const [amount, avg, min, max] = data.map(Number);
-
+            structure.forEach((item, i) => item.value = Math.round(data[i] * 10) / 10);
+            setStructure([...structure]);
         });
     }, [])
 
     return (
         <div className='Dashboard'>
-            <div className='card'>
-                <header></header>
-                <div></div>
-            </div>
+            {
+                structure.map(s => 
+                    <div key={s.name} className='card'>
+                        <header>{s.title}</header>
+                        <div>{s.value}</div>
+                    </div>    
+                )
+            }
         </div>
     )
 }
