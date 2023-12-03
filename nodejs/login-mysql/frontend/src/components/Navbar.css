@@ -29,3 +29,7 @@ nav ul li a {
 nav ul li a:hover {
     filter: brightness(1.2);
 }
+
+nav ul li.active a {
+    filter: brightness(1.3);
+}

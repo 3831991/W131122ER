@@ -1,12 +1,25 @@
 import './Navbar.css';
 import { Link } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 function Navbar() {
+    const loc = useLocation();
+
+    const navbar = [
+        { path: '/', title: 'בית' },
+        { path: '/products', title: 'ניהול מוצרים' },
+    ];
+
     return (
         <nav>
             <ul>
-                <li><Link to="/">בית</Link></li>
-                <li><Link to="/products">ניהול מוצרים</Link></li>
+                {
+                    navbar.map(n => 
+                        <li className={loc.pathname === n.path ? 'active' : '' }>
+                            <Link to={n.path}>{n.title}</Link>
+                        </li>
+                    )
+                }
             </ul>
         </nav>
     );
