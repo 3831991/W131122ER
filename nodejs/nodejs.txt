@@ -12,3 +12,6 @@ npm install express mysql2 cors moment fs express-session --save
 
 // התקנה חד"פ גלובלית
 npm i -g nodemon -D
+
+// לעבודה עם המונגו
+npm install express cors moment fs joi jsonwebtoken bcrypt mongoose --save
