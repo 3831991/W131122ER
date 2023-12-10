@@ -39,7 +39,10 @@ export default function Login() {
                 });
             }
         })
-        .then(data => setUser(data))
+        .then(data => {
+            localStorage.token = data.token;
+            setUser(data);
+        })
         .catch(err => console.log(err));
     }
 

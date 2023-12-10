@@ -1,5 +1,7 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const { User } = require('./user.model');
+const JWT_SECRET = "FullStack@#W131122ERROR!!!abc547770dffd";
 
 module.exports = app => {
     app.post('/login', async (req, res) => {
@@ -23,7 +25,14 @@ module.exports = app => {
 
         const userObject = user.toObject();
         delete userObject.password;
+        delete userObject.email;
+
+        userObject.token = jwt.sign({ user: userObject }, JWT_SECRET, { expiresIn: '1h' });
 
         res.send(userObject);
     });
+
+    app.get('/login', async (req, res) => {
+        
+    })
 }

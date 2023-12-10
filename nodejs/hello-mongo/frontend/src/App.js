@@ -12,23 +12,30 @@ function App() {
     const [user, setUser] = useState();
 
     useEffect(() => {
-        fetch("http://localhost:4000/login", {
-            credentials: 'include',
-        })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            } else {
-                return res.json().then(x => {
-                    throw new Error(x.message);
-                });
-            }
-        })
-        .then(data => setUser(data))
-        .catch(err => {
+        if (localStorage.token) {
+            fetch("http://localhost:4000/login", {
+                credentials: 'include',
+                headers: {
+                    'Authorization': localStorage.token
+                },
+            })
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                } else {
+                    return res.json().then(x => {
+                        throw new Error(x.message);
+                    });
+                }
+            })
+            .then(data => setUser(data))
+            .catch(err => {
+                navigate('/');
+                console.log(err);
+            });
+        } else {
             navigate('/');
-            console.log(err);
-        });
+        }
     }, []);
 
     return (
