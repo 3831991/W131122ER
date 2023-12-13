@@ -26,7 +26,10 @@ export default function ProductNew() {
         fetch(`http://localhost:4000/products`, {
             credentials: 'include',
             method: 'POST',
-            headers: { 'Content-type': 'application/json' },
+            headers: { 
+                'Content-type': 'application/json',
+                'Authorization': localStorage.token,
+            },
             body: JSON.stringify(item),
         })
         .then(() => navigate('/products'));
