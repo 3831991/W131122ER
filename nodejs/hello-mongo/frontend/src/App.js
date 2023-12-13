@@ -16,8 +16,8 @@ function App() {
             fetch("http://localhost:4000/login", {
                 credentials: 'include',
                 headers: {
-                    'Authorization': localStorage.token
-                },
+                    'Authorization': localStorage.token,
+                }
             })
             .then(res => {
                 if (res.ok) {
@@ -31,7 +31,6 @@ function App() {
             .then(data => setUser(data))
             .catch(err => {
                 navigate('/');
-                console.log(err);
             });
         } else {
             navigate('/');
@@ -43,11 +42,11 @@ function App() {
             <div className="App">
                 <h1>Full Stack</h1>
 
-                { user && <Logout /> }
+                {user && <Logout />}
 
                 <div className="frame">
-                    { user && <Navbar /> }
-                    { user ? <Router /> : <RouterAuth />}
+                    {user && <Navbar />}
+                    {user ? <Router /> : <RouterAuth />}
                 </div>
             </div>
         </GeneralContext.Provider>

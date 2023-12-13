@@ -7,13 +7,9 @@ export default function Logout() {
     const navigate = useNavigate();
 
     const logout = () => {
-        fetch(`http://localhost:4000/logout`, {
-            credentials: 'include',
-        })
-        .then(() => {
-            setUser(null);
-            navigate('/');
-        });
+        localStorage.removeItem('token');
+        setUser(null);
+        navigate('/');
     }
 
     return (

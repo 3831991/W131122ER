@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { User } = require('./user.model');
-const JWT_SECRET = "FullStack@#W131122ERROR!!!abc547770dffd";
+const { JWT_SECRET, getUser } = require('../config');
+const guard = require("../guard");
 
 module.exports = app => {
     app.post('/login', async (req, res) => {
@@ -32,7 +33,9 @@ module.exports = app => {
         res.send(userObject);
     });
 
-    app.get('/login', async (req, res) => {
-        
-    })
+    app.get('/login', guard, async (req, res) => {
+        const user = getUser(req, res);
+
+        res.send(user);
+    });
 }
