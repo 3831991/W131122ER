@@ -8,7 +8,11 @@ export default function Products() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch("http://localhost:4000/products")
+        fetch("http://localhost:4000/products", {
+            headers: {
+                'Authorization': localStorage.token,
+            },
+        })
         .then(res => res.json())
         .then(data => setProducts(data))
         .catch(err => console.error(err));
@@ -21,6 +25,9 @@ export default function Products() {
 
         fetch(`http://localhost:4000/products/${id}`, {
             method: 'DELETE',
+            headers: {
+                'Authorization': localStorage.token,
+            },
         })
         .then(() => {
             const newData = products.filter(x => x.id !== id);

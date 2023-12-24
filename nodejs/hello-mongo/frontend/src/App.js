@@ -17,7 +17,7 @@ function App() {
                 credentials: 'include',
                 headers: {
                     'Authorization': localStorage.token,
-                }
+                },
             })
             .then(res => {
                 if (res.ok) {

@@ -11,6 +11,9 @@ export default function ProductEdit() {
     useEffect(() => {
         fetch(`http://localhost:4000/products/${id}`, {
             credentials: 'include',
+            headers: {
+                'Authorization': localStorage.token,
+            },
         })
         .then(res => res.json())
         .then(data => setItem(data));
@@ -31,7 +34,10 @@ export default function ProductEdit() {
         fetch(`http://localhost:4000/products/${item.id}`, {
             credentials: 'include',
             method: 'PUT',
-            headers: { 'Content-type': 'application/json' },
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': localStorage.token,
+            },
             body: JSON.stringify(item),
         })
         .then(() => navigate('/products'));

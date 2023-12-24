@@ -9,7 +9,7 @@ module.exports = app => {
         const { email, password } = req.body;
 
         if (!email || !password) {
-            return res.status(403).send("Inputs cant be empty");
+            return res.status(403).send("Inputs can't be empty");
         }
 
         const user = await User.findOne({ email });
