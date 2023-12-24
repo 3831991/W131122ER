@@ -31,7 +31,7 @@ export default function ProductEdit() {
     const save = ev => {
         ev.preventDefault();
 
-        fetch(`http://localhost:4000/products/${item.id}`, {
+        fetch(`http://localhost:4000/products/${item._id}`, {
             credentials: 'include',
             method: 'PUT',
             headers: {

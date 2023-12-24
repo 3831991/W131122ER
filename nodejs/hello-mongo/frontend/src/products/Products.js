@@ -18,7 +18,7 @@ export default function Products() {
         .catch(err => console.error(err));
     }, []);
 
-    const remove = (id) => {
+    const remove = id => {
         if (!window.confirm("Are you sure you want to delete this product?")) {
             return;
         }
@@ -30,7 +30,7 @@ export default function Products() {
             },
         })
         .then(() => {
-            const newData = products.filter(x => x.id !== id);
+            const newData = products.filter(x => x._id !== id);
             setProducts(newData);
         });
     }
@@ -55,18 +55,18 @@ export default function Products() {
                 <tbody>
                     {
                         products.map((a, i) =>
-                            <tr key={a.id}>
+                            <tr key={a._id}>
                                 <td>{i + 1}</td>
                                 <td>{moment(a.createdTime).format("D/M/Y")}</td>
                                 <td>{a.name}</td>
                                 <td>{a.price}</td>
                                 <td>{a.discount}</td>
                                 <td>
-                                    <Link to={`/product/${a.id}`}>
+                                    <Link to={`/product/${a._id}`}>
                                         <button className="green"><AiFillEdit /></button>
                                     </Link>
                                     
-                                    <button className="red" onClick={() => remove(a.id)}><AiFillDelete /></button>
+                                    <button className="red" onClick={() => remove(a._id)}><AiFillDelete /></button>
                                 </td>
                             </tr>
                         )
