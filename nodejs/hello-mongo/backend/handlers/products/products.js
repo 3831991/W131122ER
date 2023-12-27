@@ -36,17 +36,11 @@ module.exports = app => {
             return res.status(403).send("required parameters missing");
         }
 
-        const product = await Product.findOne({ _id: req.params.id });
+        const obj = await Product.findByIdAndUpdate(req.params.id, { name, price, discount });
 
-        if (!product) {
+        if (!obj) {
             return res.status(403).send("Product not found");
         }
-
-        product.name = name;
-        product.price = price;
-        product.discount = discount;
-
-        product.save();
 
         res.send();
     });
