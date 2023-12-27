@@ -13,6 +13,9 @@ export default function Dashboard() {
         const url = 'http://localhost:4000/dashboard';
         const params = {
             credentials: 'include',
+            headers: {
+                'Authorization': localStorage.token,
+            }
         };
 
         Promise.all([

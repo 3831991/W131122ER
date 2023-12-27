@@ -50,4 +50,26 @@ module.exports = app => {
 
         res.send();
     });
+
+    app.get("/dashboard/products/amount", guard, async (req, res) => {
+        const amount = await Product.find().countDocuments();
+        
+        res.send(amount.toString());
+    });
+    
+    app.get("/dashboard/products/avg", guard, async (req, res) => {
+        
+        res.send();
+    });
+
+    app.get("/dashboard/products/min", guard, async (req, res) => {
+
+        res.send();
+    });
+
+    app.get("/dashboard/products/max", guard, async (req, res) => {
+
+
+        res.send(avg.toString());
+    });
 }
