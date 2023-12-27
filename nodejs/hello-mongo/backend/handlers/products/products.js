@@ -63,13 +63,16 @@ module.exports = app => {
     });
 
     app.get("/dashboard/products/min", guard, async (req, res) => {
+        const result = await Product.aggregate().group({ _id: null, minPrice: { $min: '$price' } });
+        const min = result.pop().minPrice;
 
-        res.send();
+        res.send(min.toString());
     });
 
     app.get("/dashboard/products/max", guard, async (req, res) => {
+        const result = await Product.aggregate().group({ _id: null, maxPrice: { $max: '$price' } });
+        const max = result.pop().maxPrice;
 
-
-        res.send(avg.toString());
+        res.send(max.toString());
     });
 }

@@ -5,8 +5,8 @@ export default function Dashboard() {
     const [structure, setStructure] = useState([
         { name: 'amount', title: 'כמות מוצרים' },
         { name: 'avg', title: 'ממוצע מחירים' },
-        { name: 'min', title: 'מחיר מקסימלי' },
-        { name: 'max', title: 'מחיר מינימלי' },
+        { name: 'min', title: 'מחיר מינימלי' },
+        { name: 'max', title: 'מחיר מקסימלי' },
     ]);
 
     useEffect(() => {
