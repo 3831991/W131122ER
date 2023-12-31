@@ -2,26 +2,41 @@ import { Link, useNavigate } from 'react-router-dom';
 import './Product.css';
 import { useState } from 'react';
 import { AiOutlineRight } from 'react-icons/ai';
+import { ProductValid } from './ProductsJoi';
 
 export default function ProductNew() {
-    const [item, setItem] = useState({
-        name: '',
-        price: 0,
-        discount: 0,
-    });
+    const [item, setItem] = useState({});
+    const [isValid, setIsValid] = useState(false);
     const navigate = useNavigate();
 
     const handelInput = ev => {
         const { name, value } = ev.target;
 
-        setItem({
+        const obj = {
             ...item,
             [name]: value,
-        });
+        };
+
+        setItem(obj);
+
+        const validate = ProductValid.validate(obj, { abortEarly: false });
+
+        setIsValid(!validate.error);
+
+        if (validate.error) {
+            
+        }
+
+        console.log(validate);
     }
 
     const save = ev => {
         ev.preventDefault();
+
+        if (!isValid) {
+            alert("The form is not valid");
+            return;
+        }
 
         fetch(`http://localhost:4000/products`, {
             credentials: 'include',
@@ -62,7 +77,7 @@ export default function ProductNew() {
                             <input type="text" name="discount" value={item.discount} onChange={handelInput} />
                         </label>
 
-                        <button>הוסף</button>
+                        <button disabled={!isValid}>הוסף</button>
                     </form>
                 </>
             }

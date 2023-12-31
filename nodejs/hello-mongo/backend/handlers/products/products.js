@@ -1,5 +1,6 @@
 const guard = require("../../guard");
 const { Product } = require("./products.model");
+const { ProductValid } = require("./products.joi");
 
 module.exports = app => {
     app.get('/products', guard, async (req, res) => {
@@ -19,8 +20,11 @@ module.exports = app => {
     app.post('/products', guard, async (req, res) => {
         const { name, price, discount } = req.body;
 
-        if (!name || !price || !discount) {
-            return res.status(403).send("required parameters missing");
+        const validate = ProductValid.validate(req.body, { abortEarly: false });
+
+        if (validate.error) {
+            const errors = validate.error.details.map(err => err.message);
+            return res.status(403).send(errors);
         }
 
         const product = new Product({ name, price, discount });
@@ -46,7 +50,11 @@ module.exports = app => {
     });
 
     app.delete("/products/:id", guard, async (req, res) => {
-        await Product.deleteOne({ _id: req.params.id });
+        try {
+            await Product.findByIdAndDelete(req.params.id);
+        } catch (err) {
+            return res.status(403).send("Product not found");
+        }
 
         res.send();
     });
