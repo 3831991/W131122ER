@@ -7,6 +7,7 @@ import { ProductValid } from './ProductsJoi';
 export default function ProductNew() {
     const [item, setItem] = useState({});
     const [isValid, setIsValid] = useState(false);
+    const [errors, setErrors] = useState({});
     const navigate = useNavigate();
 
     const handelInput = ev => {
@@ -17,17 +18,21 @@ export default function ProductNew() {
             [name]: value,
         };
 
-        setItem(obj);
-
         const validate = ProductValid.validate(obj, { abortEarly: false });
 
         setIsValid(!validate.error);
+        setItem(obj);
 
         if (validate.error) {
-            
-        }
+            const err = validate.error.details.find(err => err.context.key === name);
 
-        console.log(validate);
+            setErrors({
+                ...errors,
+                [name]: err?.message,
+            });
+        } else {
+            setErrors({});
+        }
     }
 
     const save = ev => {
@@ -60,22 +65,28 @@ export default function ProductNew() {
                 item &&
                 <>
                     <h2>הוספת מוצר</h2>
-
+                    
                     <form onSubmit={save}>
                         <label>
                             Name:
                             <input type="text" name="name" value={item.name} onChange={handelInput} />
                         </label>
 
+                        { errors.name ? <div className='error'>{errors.name}</div> : '' }
+
                         <label>
                             Price:
                             <input type="text" name="price" value={item.price} onChange={handelInput} />
                         </label>
 
+                        { errors.price ? <div className='error'>{errors.price}</div> : '' }
+
                         <label>
                             Discount:
                             <input type="text" name="discount" value={item.discount} onChange={handelInput} />
                         </label>
+
+                        { errors.discount ? <div className='error'>{errors.discount}</div> : '' }
 
                         <button disabled={!isValid}>הוסף</button>
                     </form>

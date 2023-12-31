@@ -84,3 +84,7 @@ button.returnLink svg {
     display: flex;
     justify-content: space-between;
 }
+
+.error {
+    color: #bf2323;
+}
