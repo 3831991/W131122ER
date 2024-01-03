@@ -5,6 +5,7 @@ const schema = new mongoose.Schema({
     email: String,
     password: String,
     isBusiness: { type: Boolean, default: false },
+    isAdmin: { type: Boolean, default: false },
 });
 
 exports.User = mongoose.model("users", schema);

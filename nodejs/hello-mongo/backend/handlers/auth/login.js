@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { User } = require('./user.model');
-const { JWT_SECRET, getUser } = require('../../config');
+const { JWT_SECRET, getLoggedUserId } = require('../../config');
 const guard = require("../../guard");
 
 module.exports = app => {
@@ -24,19 +24,9 @@ module.exports = app => {
             return res.status(403).send("email or password is incorrect");
         }
 
-        const userObject = user.toObject();
-        delete userObject.password;
-        delete userObject.email;
-
-        const token = jwt.sign({ user: userObject }, JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1h' });
 
         res.send(token);
-    });
-
-    app.get('/login', guard, async (req, res) => {
-        const user = getUser(req, res);
-
-        res.send(user);
     });
 
     app.get('/users', guard, async (req, res) => {
@@ -46,9 +36,10 @@ module.exports = app => {
     });
 
     app.get('/users/:id', guard, async (req, res) => {
-        const user = getUser(req, res);
+        const userId = getLoggedUserId(req, res);
+        const user = await User.findById(userId);
 
-        if (user._id !== req.params.id && !user.isAdmin) {
+        if (userId !== req.params.id && !user.isAdmin) {
             return res.status(401).send('User not authorized');
         }
 
@@ -58,17 +49,17 @@ module.exports = app => {
     });
 
     app.patch('/users/:id', guard, async (req, res) => {
-        const user = getUser(req, res);
+        const userId = getLoggedUserId(req, res);
 
-        if (user._id !== req.params.id) {
+        if (userId !== req.params.id) {
             return res.status(401).send('User not authorized');
         }
 
-        const _user = await User.findById(req.params.id);
+        const user = await User.findById(req.params.id);
 
-        _user.isBusiness = !_user.isBusiness;
+        user.isBusiness = !user.isBusiness;
 
-        await _user.save();
+        await user.save();
 
         res.end();
     });
