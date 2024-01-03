@@ -43,9 +43,17 @@ module.exports = app => {
             return res.status(401).send('User not authorized');
         }
 
-        const users = await User.findById(req.params.id).select("-password");
+        try {
+            const user = await User.findById(req.params.id).select("-password");
 
-        res.send(users);
+            if (!user) {
+                return res.status(403).send('User not found');
+            }
+
+            res.send(user);
+        } catch (err) {
+            return res.status(403).send('User not found');
+        }
     });
 
     app.patch('/users/:id', guard, async (req, res) => {
