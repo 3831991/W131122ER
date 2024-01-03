@@ -5,7 +5,7 @@ const { JWT_SECRET, getUser } = require('../../config');
 const guard = require("../../guard");
 
 module.exports = app => {
-    app.post('/login', async (req, res) => {
+    app.post('/users/login', async (req, res) => {
         const { email, password } = req.body;
 
         if (!email || !password) {
@@ -28,9 +28,9 @@ module.exports = app => {
         delete userObject.password;
         delete userObject.email;
 
-        userObject.token = jwt.sign({ user: userObject }, JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ user: userObject }, JWT_SECRET, { expiresIn: '1h' });
 
-        res.send(userObject);
+        res.send(token);
     });
 
     app.get('/login', guard, async (req, res) => {
@@ -38,4 +38,40 @@ module.exports = app => {
 
         res.send(user);
     });
+
+    app.get('/users', guard, async (req, res) => {
+        const users = await User.find().select("-password");
+
+        res.send(users);
+    });
+
+    app.get('/users/:id', guard, async (req, res) => {
+        const user = getUser(req, res);
+
+        if (user._id !== req.params.id && !user.isAdmin) {
+            return res.status(401).send('User not authorized');
+        }
+
+        const users = await User.findById(req.params.id).select("-password");
+
+        res.send(users);
+    });
+
+    app.patch('/users/:id', guard, async (req, res) => {
+        const user = getUser(req, res);
+
+        if (user._id !== req.params.id) {
+            return res.status(401).send('User not authorized');
+        }
+
+        const _user = await User.findById(req.params.id);
+
+        _user.isBusiness = !_user.isBusiness;
+
+        await _user.save();
+
+        res.end();
+    });
+
+
 }
