@@ -39,7 +39,7 @@ module.exports = app => {
         const userId = getLoggedUserId(req, res);
         const user = await User.findById(userId);
 
-        if (userId !== req.params.id && !user.isAdmin) {
+        if (userId !== req.params.id && !user?.isAdmin) {
             return res.status(401).send('User not authorized');
         }
 
