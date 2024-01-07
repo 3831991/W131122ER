@@ -13,7 +13,9 @@ app.use(cors({
 
 app.listen(9600);
 
-app.get('/', (req, res) => {
+app.use(express.static("public"));
+
+app.get('/file', (req, res) => {
     res.send('Hello World!');
 });
 
@@ -36,3 +38,14 @@ app.post("/file-upload", (req, res) => {
         });
     });
 });
+
+app.get("/file/:fileName", (req, res) => {
+    
+});
+
+app.get("*", (req, res) => {
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write(`<meta charset="UTF-8">`);
+    res.write("<h1>שגיאה 404</h1>");
+    res.end();
+})
