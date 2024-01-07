@@ -47,9 +47,19 @@ app.get("/file/:fileName", (req, res) => {
     res.sendFile(`${__dirname}/files/${req.params.fileName}`);
 });
 
+app.get("/files", (req, res) => {
+    fs.readdir(`${__dirname}/files`, (err, files) => {
+        if (err) {
+            return res.status(503).send("Shgia basharat");
+        }
+
+        res.send(files);
+    });
+});
+
 app.get("*", (req, res) => {
     res.writeHead(200, {'Content-Type': 'text/html'});
     res.write(`<meta charset="UTF-8">`);
     res.write("<h1>שגיאה 404</h1>");
     res.end();
-})
+});
