@@ -21,8 +21,18 @@ app.post("/file-upload", (req, res) => {
     const form = new formidable.IncomingForm();
 
     form.parse(req, (err, fields, files) => {
-        console.log(files);
+        if (err) {
+            return res.status(503).send("Shgia basharat");
+        }
 
-        res.send("File Uploaded");
+        const file = files.myFile[0];
+
+        fs.rename(file.filepath, `./files/${file.originalFilename}`, err => {
+            if (err) {
+                return res.status(503).send("Shgia basharat");
+            }
+
+            res.send(`File ${file.originalFilename} uploaded successfully!`);
+        });
     });
 });
