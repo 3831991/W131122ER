@@ -27,7 +27,7 @@ app.post("/file-upload", (req, res) => {
 
         const file = files.myFile[0];
 
-        fs.rename(file.filepath, `./files/${file.originalFilename}`, err => {
+        fs.copyFile(file.filepath, `./files/${file.originalFilename}`, err => {
             if (err) {
                 return res.status(503).send("Shgia basharat");
             }
