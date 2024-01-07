@@ -40,7 +40,7 @@ app.post("/file-upload", (req, res) => {
 });
 
 app.get("/file/:fileName", (req, res) => {
-    
+    res.sendFile(`${__dirname}/files/${req.params.fileName}`);
 });
 
 app.get("*", (req, res) => {
