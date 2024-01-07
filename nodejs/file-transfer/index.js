@@ -34,7 +34,11 @@ app.post("/file-upload", (req, res) => {
                 return res.status(503).send("Shgia basharat");
             }
 
-            res.send(`File ${file.originalFilename} uploaded successfully!`);
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            res.write(`<meta charset="UTF-8">`);
+            res.write("<h1>התמונה עלתה בהצלחה</h1>");
+            res.write(`<img width="100%" src="/file/${file.originalFilename}">`);
+            res.end();
         });
     });
 });
