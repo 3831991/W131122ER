@@ -1,0 +1,13 @@
+body {
+    background-color: azure;
+}
+
+h1 {
+    text-align: center;
+}
+
+.card {
+    padding: 12px;
+    max-width: 600px;
+    margin: auto;
+}
