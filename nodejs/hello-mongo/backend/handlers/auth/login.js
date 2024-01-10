@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { User } = require('./user.model');
-const { JWT_SECRET, getLoggedUserId } = require('../../config');
+const { getLoggedUserId } = require('../../config');
 const guard = require("../../guard");
 
 module.exports = app => {
@@ -24,7 +24,7 @@ module.exports = app => {
             return res.status(403).send("email or password is incorrect");
         }
 
-        const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         res.send(token);
     });

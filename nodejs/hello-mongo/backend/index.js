@@ -1,10 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const env = require('dotenv').config();
 
 async function main() {
-    await mongoose.connect(env.parsed.REMOTE_URL);
+    await mongoose.connect(process.env.REMOTE_URL);
     console.log('mongodb connection established on port 27017');
 }
 
@@ -30,9 +30,3 @@ require('./handlers/auth/logout')(app);
 require('./handlers/auth/signup')(app);
 require('./handlers/products/products')(app);
 require('./handlers/products/products-dashboard')(app);
-
-// if (process.env.NODE_ENV === 'development') {
-//     console.log('dev');
-// } else {
-//     console.log('prod');
-// }
