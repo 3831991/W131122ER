@@ -29,3 +29,22 @@ app.delete('/file/:fileName', async (req, res) => {
     res.end();
 });
 
+app.post("/upload", (req, res) => {
+    const form = new formidable.IncomingForm();
+
+    form.parse(req, (err, fields, files) => {
+        if (err) {
+            return res.status(503).send("Shgia basharat");
+        }
+
+        const file = files.myImage[0];
+
+        fs.copyFile(file.filepath, `./files/${file.originalFilename}`, err => {
+            if (err) {
+                return res.status(503).send("Shgia basharat");
+            }
+
+            res.end();
+        });
+    });
+});
