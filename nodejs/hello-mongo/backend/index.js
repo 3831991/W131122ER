@@ -1,9 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const env = require('dotenv').config();
 
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/full-stack-w131122er');
+    await mongoose.connect(env.parsed.REMOTE_URL);
     console.log('mongodb connection established on port 27017');
 }
 
@@ -29,3 +30,9 @@ require('./handlers/auth/logout')(app);
 require('./handlers/auth/signup')(app);
 require('./handlers/products/products')(app);
 require('./handlers/products/products-dashboard')(app);
+
+// if (process.env.NODE_ENV === 'development') {
+//     console.log('dev');
+// } else {
+//     console.log('prod');
+// }
