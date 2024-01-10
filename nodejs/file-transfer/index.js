@@ -58,8 +58,5 @@ app.get("/files", (req, res) => {
 });
 
 app.get("*", (req, res) => {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.write(`<meta charset="UTF-8">`);
-    res.write("<h1>שגיאה 404</h1>");
-    res.end();
+    res.sendFile(`${__dirname}/public/error-page.html`);
 });

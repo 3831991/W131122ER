@@ -1,0 +1,31 @@
+.App {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.image {
+  height: 250px;
+  background-size: cover;
+  background-position: center;
+}
+
+.image .remove {
+  background: mediumvioletred;
+  color: white;
+  border: 0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin: 4px;
+  cursor: pointer;
+  transition: 0.3s;
+  display: none;
+}
+
+.image:hover .remove {
+  display: block;
+}
+
+.image .remove:hover {
+  scale: 1.1;
+}
