@@ -19,31 +19,30 @@ export default function Login() {
         });
     }
 
-    const login = ev => {
+    const login = async ev => {
         ev.preventDefault();
 
-        fetch("http://localhost:4000/login", {
+        const res = await fetch("http://localhost:4000/users/login", {
             method: "POST",
             body: JSON.stringify(formData),
             headers: {
                 "Content-Type": "application/json",
             },
             credentials: 'include',
-        })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            } else {
-                return res.json().then(x => {
-                    throw new Error(x.message);
-                });
-            }
-        })
-        .then(data => {
-            localStorage.token = data.token;
-            setUser(data);
-        })
-        .catch(err => console.log(err));
+        });
+
+        const data = await res.text();
+        localStorage.token = data;
+
+        const res2 = await fetch("http://localhost:4000/users/me", {
+            credentials: 'include',
+            headers: {
+                'Authorization': localStorage.token,
+            },
+        });
+
+        const user = await res2.json();
+        setUser(user);
     }
 
     return (

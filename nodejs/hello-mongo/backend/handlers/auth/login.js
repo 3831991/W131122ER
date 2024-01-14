@@ -35,6 +35,17 @@ module.exports = app => {
         res.send(users);
     });
 
+    app.get('/users/me', guard, async (req, res) => {
+        const userId = getLoggedUserId(req, res);
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(403).send('User not found');
+        }
+        
+        res.send(user);
+    });
+
     app.get('/users/:id', guard, async (req, res) => {
         const userId = getLoggedUserId(req, res);
         const user = await User.findById(userId);

@@ -13,7 +13,7 @@ function App() {
 
     useEffect(() => {
         if (localStorage.token) {
-            fetch("http://localhost:4000/login", {
+            fetch("http://localhost:4000/users/me", {
                 credentials: 'include',
                 headers: {
                     'Authorization': localStorage.token,
