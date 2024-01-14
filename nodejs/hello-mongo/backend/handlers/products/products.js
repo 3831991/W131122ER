@@ -4,6 +4,13 @@ const { ProductValid } = require("./products.joi");
 const { getLoggedUserId } = require("../../config");
 
 module.exports = app => {
+    const isProductMine = async (productId, req, res) => {
+        const user_id = getLoggedUserId(req, res);
+        const product = await Product.findOne({ _id: productId, user_id });
+
+        return Boolean(product);
+    }
+
     app.get('/products', guard, async (req, res) => {
         const user_id = getLoggedUserId(req, res);
 
@@ -12,7 +19,9 @@ module.exports = app => {
     });
 
     app.get('/products/:id', guard, async (req, res) => {
-        const product = await Product.findOne({ _id: req.params.id });
+        const user_id = getLoggedUserId(req, res);
+
+        const product = await Product.findOne({ _id: req.params.id, user_id });
 
         if (!product) {
             return res.status(403).send("Product not found");
@@ -45,6 +54,10 @@ module.exports = app => {
             return res.status(403).send("required parameters missing");
         }
 
+        if (!await isProductMine(req.params.id, req, res)) {
+            return res.status(401).send("User not authorized");
+        }
+
         const obj = await Product.findByIdAndUpdate(req.params.id, { name, price, discount });
 
         if (!obj) {
@@ -55,6 +68,10 @@ module.exports = app => {
     });
 
     app.delete("/products/:id", guard, async (req, res) => {
+        if (!await isProductMine(req.params.id, req, res)) {
+            return res.status(401).send("User not authorized");
+        }
+
         try {
             await Product.findByIdAndDelete(req.params.id);
         } catch (err) {
