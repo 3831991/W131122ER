@@ -37,7 +37,7 @@ module.exports = app => {
 
     app.get('/users/me', guard, async (req, res) => {
         const userId = getLoggedUserId(req, res);
-        const user = await User.findById(userId);
+        const user = await User.findById(userId).select("-password");
 
         if (!user) {
             return res.status(403).send('User not found');
