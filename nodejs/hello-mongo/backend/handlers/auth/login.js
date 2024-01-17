@@ -1,8 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { User } = require('./user.model');
-const { getLoggedUserId } = require('../../config');
-const guard = require("../../guard");
+const { User, RoleTypes } = require('./user.model');
+const { getTokenParams } = require('../../config');
+const { guard } = require("../../guards");
 
 module.exports = app => {
     app.post('/users/login', async (req, res) => {
@@ -24,7 +24,16 @@ module.exports = app => {
             return res.status(403).send("email or password is incorrect");
         }
 
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign(
+            {
+                userId: user._id,
+                roleType: user.roleType
+            },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: '1h'
+            }
+        );
 
         res.send(token);
     });
@@ -36,7 +45,7 @@ module.exports = app => {
     });
 
     app.get('/users/me', guard, async (req, res) => {
-        const userId = getLoggedUserId(req, res);
+        const { userId } = getTokenParams(req, res);
         const user = await User.findById(userId).select("-password");
 
         if (!user) {
@@ -47,7 +56,7 @@ module.exports = app => {
     });
 
     app.get('/users/:id', guard, async (req, res) => {
-        const userId = getLoggedUserId(req, res);
+        const { userId } = getTokenParams(req, res);
         const user = await User.findById(userId);
 
         if (userId !== req.params.id && !user?.isAdmin) {
@@ -68,7 +77,7 @@ module.exports = app => {
     });
 
     app.patch('/users/:id', guard, async (req, res) => {
-        const userId = getLoggedUserId(req, res);
+        const { userId } = getTokenParams(req, res);
 
         if (userId !== req.params.id) {
             return res.status(401).send('User not authorized');
@@ -76,7 +85,11 @@ module.exports = app => {
 
         const user = await User.findById(req.params.id);
 
-        user.isBusiness = !user.isBusiness;
+        if (user.roleType == RoleTypes.user) {
+            user.roleType = RoleTypes.business;
+        } else if (user.roleType == RoleTypes.business) {
+            user.roleType = RoleTypes.user;
+        }
 
         await user.save();
 

@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-exports.getLoggedUserId = (req, res) => {
+exports.getTokenParams = (req, res) => {
     if (!req.headers.authorization) {
         return null;
     }
@@ -11,5 +11,5 @@ exports.getLoggedUserId = (req, res) => {
         return res.status(401).send('User not authorized');
     }
 
-    return data.userId;
+    return data;
 }

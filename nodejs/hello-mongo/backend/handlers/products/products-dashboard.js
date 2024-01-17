@@ -1,42 +1,29 @@
-const guard = require("../../guard");
+const { getTokenParams } = require("../../config");
+const { guard } = require("../../guards");
 const { Product } = require("./products.model");
 
-async function getMethod(method) {
+async function getMethod(method, req, res) {
     const result = await Product.aggregate().group({ _id: null, value: { ['$' + method]: '$price' } });
     return result.pop().value.toString();
 }
 
 module.exports = app => {
     app.get("/dashboard/products/amount", guard, async (req, res) => {
-        const amount = await Product.find().countDocuments();
+        const { userId } = getTokenParams(req, res);
+        const amount = await Product.find({ user_id: userId }).countDocuments();
         
         res.send(amount.toString());
     });
     
     app.get("/dashboard/products/avg", guard, async (req, res) => {
-        // const result = await Product.aggregate().group({ _id: null, avg: { $avg: '$price' } });
-        // const avg = result.pop().avg;
-
-        // res.send(avg.toString());
-
-        res.send(await getMethod('avg'));
+        res.send(await getMethod('avg', req, res));
     });
 
     app.get("/dashboard/products/min", guard, async (req, res) => {
-        // const result = await Product.aggregate().group({ _id: null, minPrice: { $min: '$price' } });
-        // const min = result.pop().minPrice;
-
-        // res.send(min.toString());
-
-        res.send(await getMethod('min'));
+        res.send(await getMethod('min', req, res));
     });
 
     app.get("/dashboard/products/max", guard, async (req, res) => {
-        // const result = await Product.aggregate().group({ _id: null, maxPrice: { $max: '$price' } });
-        // const max = result.pop().maxPrice;
-
-        // res.send(max.toString());
-
-        res.send(await getMethod('max'));
+        res.send(await getMethod('max', req, res));
     });
 }
