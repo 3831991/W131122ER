@@ -3,18 +3,9 @@ const Image = require('../users/models/image.model');
 const Address = require('../users/models/address.model');
 
 const schema = new mongoose.Schema({
-    title: {
-        type: String,
-        unique: true,
-    },
-    subTitle: {
-        type: String,
-        unique: true,
-    },
-    description: {
-        type: String,
-        unique: true,
-    },
+    title: String,
+    subTitle: String,
+    description: String,
     phone: String,
     email: String,
     address: Address,
@@ -23,4 +14,4 @@ const schema = new mongoose.Schema({
     likes: [String],
 });
 
-exports.User = mongoose.model('users', schema);
+exports.Card = mongoose.model('cards', schema);
