@@ -12,6 +12,10 @@ const schema = new mongoose.Schema({
     image: Image,
     web: String,
     likes: [String],
+    user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+    },
 });
 
 exports.Card = mongoose.model('cards', schema);

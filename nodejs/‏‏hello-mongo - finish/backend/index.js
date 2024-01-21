@@ -26,3 +26,4 @@ app.listen(4000);
 app.get('/', (req, res) => res.send("Hello World!"));
 require('./handlers/users/login')(app);
 require('./handlers/users/signup')(app);
+require('./initial-data/initial-data.service');
